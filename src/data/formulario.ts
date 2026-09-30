@@ -10,7 +10,7 @@
  */
 export const configFormulario = {
   provedor: 'web3forms' as 'web3forms' | 'formspree',
-  web3formsChave: null as string | null, // PREENCHER: access key da Web3Forms
+  web3formsChave: 'b6c5cde7-6dc7-43a4-b940-0d0eb62653e4' as string | null,
   formspreeId: null as string | null,
 };
 
