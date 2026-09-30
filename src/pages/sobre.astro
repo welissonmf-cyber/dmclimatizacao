@@ -11,7 +11,7 @@ const anos = empresa.anoFundacao ? new Date().getFullYear() - empresa.anoFundaca
 
 const diferenciais = [
   { titulo: 'Equipe própria', texto: 'Técnicos, mecânicos e eletricistas da casa, treinados pelos fabricantes das principais marcas.' },
-  { titulo: 'Engenharia', texto: 'Engenheiro responsável para projetos, laudos e PMOC com ART.' },
+  { titulo: 'Responsável técnico', texto: 'Técnico registrado no CFT, que assina PMOC e laudos com TRT.' },
   { titulo: 'Veículos próprios', texto: 'Chegamos no dia e horário combinados, com o material necessário.' },
   { titulo: 'Ferramentas e segurança', texto: 'Equipamentos adequados para cada serviço e EPIs para trabalho em altura.' },
   { titulo: 'Garantia', texto: 'Todo serviço executado tem garantia.' },
@@ -21,7 +21,7 @@ const diferenciais = [
 
 <Base
   titulo="Sobre a DM Climatização | Ar Condicionado em Belo Horizonte"
-  descricao="Conheça a DM Climatização: instalação, manutenção e PMOC de ar condicionado em Belo Horizonte, com equipe própria e engenheiro responsável."
+  descricao="Conheça a DM Climatização: instalação, manutenção e PMOC de ar condicionado em Belo Horizonte, com equipe própria e técnico responsável registrado no CFT."
   mensagemWhatsApp={mensagem}
 >
   <CabecalhoPagina
@@ -76,15 +76,15 @@ const diferenciais = [
       <div>
         <h2>Equipe e responsável técnico</h2>
         <p>
-          Nossa equipe reúne administradores, engenheiro, técnicos, mecânicos e eletricistas com
+          Nossa equipe reúne administradores, técnicos, mecânicos e eletricistas com
           experiência em empresas tradicionais do ramo.
         </p>
         <ul class="lista-check">
           <li>
             Responsável técnico:{' '}
             {empresa.responsavelTecnico
-              ? `${empresa.responsavelTecnico.nome}, CREA ${empresa.responsavelTecnico.crea}`
-              : <Preencher>nome e CREA do engenheiro</Preencher>}
+              ? `${empresa.responsavelTecnico}, técnico registrado no CFT`
+              : <><Preencher>nome do técnico</Preencher>, técnico registrado no CFT</>}
           </li>
           <li><Preencher>quantidade de técnicos na equipe</Preencher></li>
           <li><Preencher>marcas em que a equipe tem treinamento ou credenciamento comprovado</Preencher></li>

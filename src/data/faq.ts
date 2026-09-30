@@ -27,9 +27,9 @@ export const faqGeral: Pergunta[] = [
       'Pode. Cada fabricante tem suas regras: alguns exigem que a instalação seja feita por empresa credenciada para manter a garantia. Antes de instalar ou mexer em um aparelho na garantia, verifique o manual ou nos envie o modelo que conferimos para você.',
   },
   {
-    pergunta: 'Vocês emitem ART e laudo técnico?',
+    pergunta: 'Vocês emitem TRT e laudo técnico?',
     resposta:
-      'Sim. Para contratos de PMOC e laudos técnicos, emitimos a ART (Anotação de Responsabilidade Técnica) junto ao CREA, assinada pelo engenheiro responsável. [PREENCHER: confirmar engenheiro responsável e CREA]',
+      'Sim. Para contratos de PMOC e laudos técnicos, emitimos o TRT (Termo de Responsabilidade Técnica), registrado no Conselho Federal dos Técnicos Industriais (CFT) pelo nosso técnico responsável.',
   },
   {
     pergunta: 'Qual a diferença entre limpeza e higienização?',

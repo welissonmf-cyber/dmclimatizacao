@@ -45,7 +45,8 @@ export const empresa = {
   atendeEmergencia: null as boolean | null,
 
   anoFundacao: null as number | null, // PREENCHER: CNPJ sugere ~2014
-  responsavelTecnico: null as { nome: string; crea: string } | null,
+  /** Técnico responsável, registrado no CFT (emite TRT). Não publicar o nº de registro: tem formato de CPF. */
+  responsavelTecnico: 'Denis Guedes de Oliveira' as string | null,
 } as const;
 
 export function linkWhatsApp(mensagem?: string): string {

@@ -8,7 +8,7 @@ Onde preencher: quase tudo em `src/data/empresa.ts`; o resto indicado em cada it
 - [ ] **Cidades atendidas** — Home, Contato, rodapé e dados para o Google.
 - [ ] **Horário de atendimento** — Home, Contato e rodapé.
 - [ ] **Atende fim de semana / emergência?** — resposta do FAQ em `src/data/faq.ts`.
-- [ ] **Engenheiro responsável + nº do CREA** — Home (bloco PMOC), PMOC, Sobre e FAQ. Sem isso, não prometer ART.
+- [x] Técnico responsável: Denis Guedes de Oliveira, registrado no CFT (TRT). Nº de registro não publicado (tem formato de CPF; informar só no TRT/contrato).
 - [ ] **Razão social** — Política de privacidade.
 - [ ] Endereço (opcional; só se houver atendimento ao público).
 
