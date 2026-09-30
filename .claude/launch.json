@@ -6,6 +6,12 @@
       "runtimeExecutable": "C:\\Users\\01356334601\\AppData\\Local\\Programs\\nodejs\\node.exe",
       "runtimeArgs": ["node_modules/astro/bin/astro.mjs", "dev", "--port", "4321"],
       "port": 4321
+    },
+    {
+      "name": "preview",
+      "runtimeExecutable": "C:\\Users\\01356334601\\AppData\\Local\\Programs\\nodejs\\node.exe",
+      "runtimeArgs": ["node_modules/astro/bin/astro.mjs", "preview", "--port", "4322"],
+      "port": 4322
     }
   ]
 }

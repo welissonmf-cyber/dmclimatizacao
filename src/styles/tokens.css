@@ -1,21 +1,22 @@
 /*
  * Tokens de design — DM Climatização
  * Azuis derivados do logo (gota azul-clara + "DM" azul-marinho); cobre como cor de ação.
- * Contraste verificado (WCAG AA):
- *   branco sobre --cobre ............ 4,6:1
+ * Contraste verificado (WCAG AA, texto normal ≥ 4,5:1) sobre branco e sobre --gelo:
+ *   branco sobre --cobre ............ 5,1:1
+ *   --cobre sobre --gelo ............ 4,6:1
  *   branco sobre --azul-tecnico ..... 13,1:1
- *   --azul-ar sobre branco .......... 4,8:1
+ *   --azul-ar sobre branco / gelo ... 5,5:1 / 4,9:1
  *   --texto sobre --gelo ............ 13,5:1
  */
 :root {
   /* Cores */
   --azul-tecnico: #14305c;
   --azul-tecnico-escuro: #0c1f3d;
-  --azul-ar: #0a78b5;
+  --azul-ar: #086fa8;
   --azul-logo: #0a93d3; /* só decorativo: não usar para texto sobre branco */
   --gelo: #eef4f7;
   --gelo-borda: #d6e3ea;
-  --cobre: #b0602c;
+  --cobre: #a65a29;
   --cobre-escuro: #8f4c21;
   --texto: #1c2833;
   --texto-suave: #4a5a68;
