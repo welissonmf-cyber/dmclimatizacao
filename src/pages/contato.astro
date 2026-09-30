@@ -51,7 +51,9 @@ const mensagem = 'Olá! Vim pela página de contato do site e gostaria de um or�
             <Icone nome="local" />
             <div>
               <span class="contato__rotulo">Área de atendimento</span>
-              {empresa.cidadesAtendidas ? empresa.cidadesAtendidas.join(', ') : empresa.areaResumo}
+              {empresa.cidadesAtendidas
+                ? `${empresa.cidadesAtendidas.join(', ')} e demais cidades da Grande BH`
+                : empresa.areaResumo}
             </div>
           </li>
           <li>
@@ -59,6 +61,7 @@ const mensagem = 'Olá! Vim pela página de contato do site e gostaria de um or�
             <div>
               <span class="contato__rotulo">Horário</span>
               {empresa.horario ?? <Preencher>horário de atendimento</Preencher>}
+              {empresa.plantao && <><br />{empresa.plantao}</>}
             </div>
           </li>
         </ul>

@@ -65,13 +65,14 @@ const linksEmpresa = [
         </li>
         <li>
           <Icone nome="local" />
-          <span>
-            {empresa.cidadesAtendidas ? empresa.cidadesAtendidas.join(', ') : empresa.areaResumo}
-          </span>
+          <span>{empresa.areaResumo}</span>
         </li>
         <li>
           <Icone nome="relogio" />
-          <span>{empresa.horario ?? <Preencher>horário de atendimento</Preencher>}</span>
+          <span>
+            {empresa.horario ?? <Preencher>horário de atendimento</Preencher>}
+            {empresa.plantao && <><br />{empresa.plantao}</>}
+          </span>
         </li>
       </ul>
     </div>

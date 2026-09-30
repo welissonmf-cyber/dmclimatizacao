@@ -229,12 +229,15 @@ const etapas = [
         <h2>Atendimento em {empresa.areaResumo}</h2>
         <p>
           {empresa.cidadesAtendidas
-            ? empresa.cidadesAtendidas.join(', ')
+            ? `${empresa.cidadesAtendidas.join(', ')} e demais cidades da região metropolitana.`
             : <Preencher>lista de cidades atendidas (BH, Contagem, Betim, Nova Lima...)</Preencher>}
         </p>
         <p class="atendimento__horario">
           <Icone nome="relogio" />
-          <span>{empresa.horario ?? <Preencher>horário de atendimento</Preencher>}</span>
+          <span>
+            {empresa.horario ?? <Preencher>horário de atendimento</Preencher>}
+            {empresa.plantao && <><br />{empresa.plantao}</>}
+          </span>
         </p>
       </div>
       <div class="atendimento__contato">

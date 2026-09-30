@@ -39,6 +39,6 @@ export const faqGeral: Pergunta[] = [
   {
     pergunta: 'Atendem fim de semana e emergências?',
     resposta:
-      '[PREENCHER: confirmar se há atendimento aos sábados, domingos e emergências]',
+      'Sim. O atendimento normal é de segunda a sexta, das 8h às 18h, e aos sábados e domingos temos plantão para emergências. Chame no WhatsApp que informamos a disponibilidade.',
   },
 ];

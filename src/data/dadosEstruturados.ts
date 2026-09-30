@@ -29,17 +29,27 @@ export function jsonLdEmpresa(site: URL) {
       addressRegion: empresa.uf,
       addressCountry: 'BR',
     },
-    areaServed: (empresa.cidadesAtendidas ?? [empresa.cidadePrincipal]).map((cidade) => ({
-      '@type': 'City',
-      name: cidade,
-    })),
+    areaServed: [
+      { '@type': 'AdministrativeArea', name: 'Região Metropolitana de Belo Horizonte' },
+      ...(empresa.cidadesAtendidas ?? [empresa.cidadePrincipal]).map((cidade) => ({
+        '@type': 'City',
+        name: cidade,
+      })),
+    ],
+    // Horário comercial; o plantão de fim de semana fica só no texto do site.
+    openingHoursSpecification: {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '08:00',
+      closes: '18:00',
+    },
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: 'customer service',
       telephone: `+${empresa.whatsapp.numero}`,
       availableLanguage: 'Portuguese',
     },
-    // PREENCHER quando houver: openingHoursSpecification (horário) e sameAs (Perfil da Empresa no Google)
+    // PREENCHER quando houver: sameAs (link do Perfil da Empresa no Google)
   };
 }
 

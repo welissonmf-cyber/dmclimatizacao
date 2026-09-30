@@ -5,12 +5,12 @@ Onde preencher: quase tudo em `src/data/empresa.ts`; o resto indicado em cada it
 
 ## Dados da empresa (`src/data/empresa.ts`)
 - [x] Ano de fundação: 2014 (início de atividade no CNPJ em 07/08/2014).
-- [ ] **Cidades atendidas** — Home, Contato, rodapé e dados para o Google.
-- [ ] **Horário de atendimento** — Home, Contato e rodapé.
-- [ ] **Atende fim de semana / emergência?** — resposta do FAQ em `src/data/faq.ts`.
+- [x] Cidades: Grande BH (14 principais listadas + "demais cidades da região metropolitana").
+- [x] Horário: segunda a sexta, 8h às 18h.
+- [x] Plantão aos sábados e domingos.
 - [x] Técnico responsável: Denis Guedes de Oliveira, registrado no CFT (TRT). Nº de registro não publicado (tem formato de CPF; informar só no TRT/contrato).
 - [x] Razão social: Denis Guedes de Oliveira (publicada sem o CPF que consta no nome empresarial).
-- [ ] Endereço (opcional; só se houver atendimento ao público).
+- [ ] Endereço: não publicado (sede no Diamante/Barreiro é de empresário individual). Mostrar só o bairro se o cliente quiser.
 
 ## Sobre (`src/pages/sobre.astro`)
 - [ ] 1 ou 2 frases sobre a origem da empresa (quem fundou, experiência, marcos).

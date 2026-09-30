@@ -36,14 +36,19 @@ export const empresa = {
 
   cidadePrincipal: 'Belo Horizonte',
   uf: 'MG',
-  /** PREENCHER: lista real de cidades atendidas */
-  cidadesAtendidas: null as string[] | null,
-  /** Texto curto usado enquanto a lista acima não existir */
-  areaResumo: 'Belo Horizonte e região metropolitana',
+  /** Principais cidades da Grande BH (a empresa atende toda a região metropolitana). */
+  cidadesAtendidas: [
+    'Belo Horizonte', 'Contagem', 'Betim', 'Nova Lima', 'Sabará', 'Santa Luzia',
+    'Ribeirão das Neves', 'Vespasiano', 'Lagoa Santa', 'Ibirité', 'Sarzedo',
+    'Brumadinho', 'Pedro Leopoldo', 'Confins',
+  ] as string[] | null,
+  /** Texto curto para cabeçalho e rodapé */
+  areaResumo: 'Belo Horizonte e Grande BH',
 
-  endereco: null as string | null, // PREENCHER: endereço ou só bairro/cidade
-  horario: null as string | null, // PREENCHER: ex. "Seg a sex, 8h às 18h · Sáb, 8h às 12h"
-  atendeEmergencia: null as boolean | null,
+  endereco: null as string | null, // não publicar: sede é de empresário individual
+  horario: 'Segunda a sexta, das 8h às 18h' as string | null,
+  /** Atendimento fora do horário comercial */
+  plantao: 'Plantão aos sábados e domingos' as string | null,
 
   anoFundacao: 2014 as number | null, // início de atividade no CNPJ: 07/08/2014
   /** Técnico responsável, registrado no CFT (emite TRT). Não publicar o nº de registro: tem formato de CPF. */
