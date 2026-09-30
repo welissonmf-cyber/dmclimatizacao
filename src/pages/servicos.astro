@@ -1,0 +1,215 @@
+---
+import Base from '../layouts/Base.astro';
+import CabecalhoPagina from '../components/CabecalhoPagina.astro';
+import ChamadaFinal from '../components/ChamadaFinal.astro';
+import Icone from '../components/Icone.astro';
+import { linkWhatsApp } from '../data/empresa';
+import { marcasAtendidas } from '../data/servicos';
+
+const mensagem = 'Olá! Vim pela página de serviços do site e gostaria de um orçamento.';
+
+const grupos = [
+  {
+    id: 'casa',
+    titulo: 'Para sua casa',
+    texto: 'Aparelho novo, que parou de gelar ou com cheiro ruim: resolvemos com hora marcada e sem sujeira.',
+    itens: [
+      'Instalação de split hi-wall convencional e inverter',
+      'Limpeza e higienização completa',
+      'Recarga de gás e detecção de vazamento',
+      'Infraestrutura para obra: tubulação embutida antes do acabamento',
+      'Troca de aparelho e reinstalação em mudança',
+    ],
+  },
+  {
+    id: 'comercio',
+    titulo: 'Para escritório e comércio',
+    texto: 'Loja, clínica, escritório ou restaurante: conforto para quem trabalha e para o cliente, sem parar a operação.',
+    itens: [
+      'Instalação de cassete, piso-teto e multi-split',
+      'Contrato de manutenção preventiva',
+      'PMOC com ART, exigido para ambientes de uso coletivo',
+      'Atendimento corretivo com prioridade para contratos',
+      'Laudo técnico dos equipamentos',
+    ],
+  },
+  {
+    id: 'industria',
+    titulo: 'Para indústria e grandes ambientes',
+    texto: 'Sistemas maiores pedem projeto, dimensionamento e equipe acostumada com casa de máquinas.',
+    itens: [
+      'Projeto e cálculo de carga térmica',
+      'Sistemas VRF/VRV e split dutado (built-in)',
+      'Manutenção de sistemas centrais e casas de máquinas',
+      'PMOC e laudos com responsável técnico',
+      'Planejamento de manutenção para não parar a produção',
+    ],
+  },
+];
+
+const equipamentos = [
+  ['Janela (ACJ)', 'Aparelho único instalado em vão na parede.', 'Quartos e ambientes pequenos'],
+  ['Split hi-wall', 'Unidade interna na parede e condensadora do lado de fora. Existe em versão convencional e inverter.', 'Residências, escritórios e consultórios até cerca de 50 m²'],
+  ['Split cassete', 'Embutido no forro, com saída de ar em quatro direções e visual discreto.', 'Lojas, salas comerciais e recepções'],
+  ['Piso-teto', 'Alta vazão de ar e maiores capacidades, instalado no teto ou na parede.', 'Salões, restaurantes e ambientes amplos'],
+  ['Multi-split (bi, tri, quadri)', 'Uma condensadora atende várias unidades internas.', 'Apartamentos com pouco espaço na fachada'],
+  ['Built-in / dutado', 'Fica escondido no entreforro e distribui o ar por dutos.', 'Projetos em que o aparelho não pode aparecer'],
+  ['VRF / VRV', 'Sistema central de fluxo variável, com várias evaporadoras controladas de forma independente.', 'Prédios comerciais, hotéis e grandes áreas'],
+];
+---
+
+<Base
+  titulo="Serviços de Ar Condicionado em BH: Instalação, Manutenção e PMOC | DM Climatização"
+  descricao="Instalação, manutenção preventiva e corretiva, higienização, recarga de gás, PMOC e projetos VRF/VRV em Belo Horizonte e região. Para casas, comércio e indústria."
+  mensagemWhatsApp={mensagem}
+>
+  <CabecalhoPagina
+    rotulo="Serviços"
+    titulo="Serviços de ar condicionado para casa, comércio e indústria"
+    apoio="Instalação, manutenção, higienização, PMOC e projetos, em todos os tipos de equipamento, em Belo Horizonte e região."
+  />
+
+  <section class="secao">
+    <div class="container grupos">
+      {
+        grupos.map((g) => (
+          <article class="cartao grupo" id={g.id}>
+            <h2>{g.titulo}</h2>
+            <p>{g.texto}</p>
+            <ul class="lista-check">
+              {g.itens.map((i) => <li>{i}</li>)}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="secao secao--gelo">
+    <div class="container detalhes">
+      <article id="preventiva">
+        <h2>Manutenção preventiva</h2>
+        <p>
+          Visitas programadas para limpar filtros, serpentinas e bandeja, conferir pressão do gás,
+          parte elétrica e dreno. É o que mantém o aparelho rendendo bem, gastando menos energia e
+          sem quebras inesperadas.
+        </p>
+        <p>
+          Para empresas, a preventiva segue o <a href="/pmoc.html">PMOC</a>, com frequência e
+          registros definidos no plano.
+        </p>
+      </article>
+      <article id="corretiva">
+        <h2>Manutenção corretiva</h2>
+        <p>
+          Aparelho que não gela, pinga dentro de casa, faz barulho, desarma o disjuntor ou mostra
+          código de erro no display. Fazemos o diagnóstico, explicamos o problema e passamos o
+          orçamento antes de trocar qualquer peça.
+        </p>
+        <p>Atendemos aparelhos convencionais e inverter, incluindo placas eletrônicas.</p>
+      </article>
+      <article id="projetos">
+        <h2>Projetos e VRF/VRV</h2>
+        <p>
+          Para obra nova ou reforma: cálculo de carga térmica, escolha do sistema, projeto de
+          tubulação, dreno e elétrica, e instalação de sistemas VRF/VRV e dutados.
+        </p>
+        <p>
+          Quanto antes entramos na obra, mais barato fica: a infraestrutura embutida evita quebrar
+          parede depois.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section class="secao">
+    <div class="container">
+      <div class="intro-secao">
+        <p class="rotulo">Referência</p>
+        <h2>Tipos de equipamento que atendemos</h2>
+        <p>Não sabe qual é o seu? Mande uma foto pelo WhatsApp que identificamos para você.</p>
+      </div>
+      <div class="tabela-rolagem">
+        <table class="tabela">
+          <thead>
+            <tr>
+              <th scope="col">Equipamento</th>
+              <th scope="col">Como é</th>
+              <th scope="col">Indicado para</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              equipamentos.map(([nome, como, uso]) => (
+                <tr>
+                  <th scope="row">{nome}</th>
+                  <td>{como}</td>
+                  <td>{uso}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="marcas__titulo">Marcas que atendemos</h3>
+      <p class="marcas">{marcasAtendidas.join(' · ')}, entre outras.</p>
+
+      <a class="btn btn--contorno" href={linkWhatsApp('Olá! Vim pelo site. Segue a foto do meu aparelho para identificar o modelo:')} target="_blank" rel="noopener">
+        <Icone nome="whatsapp" />
+        Enviar foto do aparelho
+      </a>
+    </div>
+  </section>
+
+  <ChamadaFinal mensagemWhatsApp={mensagem} />
+</Base>
+
+<style>
+  .grupos {
+    display: grid;
+    gap: var(--esp-5);
+  }
+
+  @media (min-width: 64rem) {
+    .grupos {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .grupo {
+    border-top: 4px solid var(--azul-ar);
+  }
+
+  .grupo h2 {
+    font-size: var(--fs-h3);
+  }
+
+  .grupo > p {
+    color: var(--texto-suave);
+  }
+
+  .detalhes {
+    display: grid;
+    gap: var(--esp-6);
+  }
+
+  @media (min-width: 64rem) {
+    .detalhes {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .detalhes h2 {
+    font-size: var(--fs-h3);
+  }
+
+  .marcas__titulo {
+    margin-top: var(--esp-7);
+  }
+
+  .marcas {
+    max-width: 44rem;
+    color: var(--texto-suave);
+  }
+</style>

@@ -1,0 +1,227 @@
+---
+/*
+ * Base legal (revisar a redação antes de publicar):
+ * - Lei 13.589/2018: obriga edifícios de uso público e coletivo com ambientes climatizados
+ *   artificialmente a manter PMOC dos sistemas de climatização.
+ * - Portaria MS 3.523/1998: procedimentos de limpeza e responsável técnico habilitado.
+ * - Resolução ANVISA RE 9/2003: padrões de qualidade do ar interior.
+ * - Lei 6.437/1977: infrações sanitárias (advertência, multa, interdição).
+ */
+import Base from '../layouts/Base.astro';
+import CabecalhoPagina from '../components/CabecalhoPagina.astro';
+import ChamadaFinal from '../components/ChamadaFinal.astro';
+import Faq from '../components/Faq.astro';
+import Icone from '../components/Icone.astro';
+import Preencher from '../components/Preencher.astro';
+import { empresa, linkWhatsApp } from '../data/empresa';
+import type { Pergunta } from '../data/faq';
+
+const mensagem = 'Olá! Vim pela página de PMOC do site e gostaria de agendar uma visita técnica para a minha empresa.';
+
+const quemPrecisa = [
+  'Escritórios e salas comerciais',
+  'Lojas, shoppings e supermercados',
+  'Clínicas, consultórios e laboratórios',
+  'Escolas, faculdades e cursos',
+  'Academias, hotéis e restaurantes',
+  'Bancos, agências e órgãos públicos',
+  'Indústrias com áreas climatizadas',
+  'Igrejas, cinemas e auditórios',
+];
+
+const etapas = [
+  { titulo: 'Levantamento', texto: 'Visita técnica para cadastrar todos os equipamentos, capacidades e ambientes atendidos.' },
+  { titulo: 'Plano e ART', texto: 'Elaboração do PMOC com as rotinas e frequências de cada equipamento e emissão da ART pelo engenheiro responsável.' },
+  { titulo: 'Execução', texto: 'Visitas periódicas de manutenção preventiva: limpeza, verificações elétricas e mecânicas, controle de filtros e drenos.' },
+  { titulo: 'Registro', texto: 'Cada atividade fica registrada, com relatório para apresentar à vigilância sanitária quando solicitado.' },
+];
+
+const faqPmoc: Pergunta[] = [
+  {
+    pergunta: 'Minha empresa é obrigada a ter PMOC?',
+    resposta:
+      'Se o imóvel é de uso público ou coletivo e tem ar condicionado — escritório, loja, clínica, escola, academia, restaurante —, a Lei 13.589/2018 exige o PMOC. Na visita técnica avaliamos o seu caso sem compromisso.',
+  },
+  {
+    pergunta: 'O que acontece se a empresa não tiver PMOC?',
+    resposta:
+      'A falta do plano é infração sanitária e pode gerar advertência, multa e até interdição do ambiente pela vigilância sanitária, além do risco à saúde de funcionários e clientes.',
+  },
+  {
+    pergunta: 'Com que frequência são as visitas?',
+    resposta:
+      'Depende do tipo e da quantidade de equipamentos e do uso do ambiente. Em geral há verificações mensais de filtros e limpezas completas trimestrais ou semestrais — tudo fica definido no plano.',
+  },
+  {
+    pergunta: 'O PMOC precisa de responsável técnico?',
+    resposta:
+      'Sim. O plano deve ter um responsável técnico habilitado, e a ART (Anotação de Responsabilidade Técnica) registrada no CREA comprova essa responsabilidade.',
+  },
+  {
+    pergunta: 'Vocês atendem empresas com poucos aparelhos?',
+    resposta:
+      'Sim. Atendemos desde salas comerciais com dois ou três splits até prédios com sistemas VRF e centrais.',
+  },
+];
+---
+
+<Base
+  titulo="PMOC em BH: Plano de Manutenção de Ar Condicionado com ART | DM Climatização"
+  descricao="Contrato de PMOC para empresas em Belo Horizonte e região: plano, ART, manutenção preventiva e relatórios conforme a Lei 13.589/2018. Solicite uma visita técnica."
+  mensagemWhatsApp={mensagem}
+>
+  <CabecalhoPagina
+    rotulo="Para empresas"
+    titulo="PMOC para empresas em BH e região"
+    apoio="Plano de Manutenção, Operação e Controle com ART, visitas preventivas e relatórios — para a sua empresa cumprir a Lei 13.589/2018 sem se preocupar."
+  >
+    <a class="btn btn--acao" href={linkWhatsApp(mensagem)} target="_blank" rel="noopener">
+      <Icone nome="documento" />
+      Solicitar visita técnica
+    </a>
+  </CabecalhoPagina>
+
+  <section class="secao">
+    <div class="container grade-2 topo">
+      <div>
+        <h2>O que é o PMOC</h2>
+        <p>
+          O PMOC é o documento que define <strong>como, quando e por quem</strong> os aparelhos de ar
+          condicionado de um imóvel são mantidos: quais limpezas, quais verificações, com que
+          frequência e quem é o responsável técnico.
+        </p>
+        <p>
+          Ele existe para proteger a saúde de quem ocupa o ambiente. Ar condicionado sem manutenção
+          acumula fungos, bactérias e poeira e espalha tudo isso pelo ar.
+        </p>
+      </div>
+      <div class="cartao lei">
+        <p class="rotulo">A lei</p>
+        <p>
+          A <strong>Lei 13.589/2018</strong> determina que todos os edifícios de uso público e
+          coletivo com ambientes climatizados artificialmente mantenham um PMOC dos sistemas de
+          climatização. Os procedimentos seguem a Portaria 3.523/98 do Ministério da Saúde e os
+          padrões de qualidade do ar da Anvisa.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao secao--gelo">
+    <div class="container">
+      <div class="intro-secao">
+        <h2>Quem precisa ter PMOC</h2>
+        <p>Qualquer ambiente climatizado onde circulam funcionários, clientes ou público, por exemplo:</p>
+      </div>
+      <ul class="lista-check quem">
+        {quemPrecisa.map((q) => <li>{q}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="secao">
+    <div class="container">
+      <div class="intro-secao">
+        <h2>Como funciona o contrato</h2>
+        <p>Você só acompanha: a DM cuida do plano, das visitas e da documentação.</p>
+      </div>
+      <ol class="etapas">
+        {
+          etapas.map((e) => (
+            <li>
+              <h3>{e.titulo}</h3>
+              <p>{e.texto}</p>
+            </li>
+          ))
+        }
+      </ol>
+      <p class="responsavel">
+        Responsável técnico:
+        {empresa.responsavelTecnico
+          ? `${empresa.responsavelTecnico.nome} — CREA ${empresa.responsavelTecnico.crea}`
+          : <Preencher>nome do engenheiro e número do CREA</Preencher>}
+      </p>
+    </div>
+  </section>
+
+  <section class="secao secao--gelo">
+    <div class="container">
+      <div class="intro-secao">
+        <h2>Dúvidas sobre PMOC</h2>
+      </div>
+      <Faq perguntas={faqPmoc} />
+    </div>
+  </section>
+
+  <ChamadaFinal
+    titulo="Sua empresa está em dia com o PMOC?"
+    texto="Agende uma visita técnica: levantamos os equipamentos e mostramos o que falta para regularizar."
+    mensagemWhatsApp={mensagem}
+    rotuloBotao="Solicitar visita técnica"
+  />
+</Base>
+
+<style>
+  .topo {
+    align-items: start;
+  }
+
+  .lei {
+    border-left: 4px solid var(--cobre);
+  }
+
+  .quem {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    gap: var(--esp-3) var(--esp-6);
+  }
+
+  .quem li + li {
+    margin-top: 0;
+  }
+
+  .etapas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: var(--esp-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: etapa;
+  }
+
+  .etapas li {
+    counter-increment: etapa;
+    padding: var(--esp-5);
+    border: 1px solid var(--gelo-borda);
+    border-radius: var(--raio);
+  }
+
+  .etapas li::before {
+    content: counter(etapa);
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    margin-bottom: var(--esp-3);
+    border-radius: 50%;
+    background: var(--azul-tecnico);
+    color: var(--branco);
+    font-family: var(--fonte-titulo);
+    font-weight: 700;
+  }
+
+  .etapas h3 {
+    margin-bottom: var(--esp-1);
+  }
+
+  .etapas p {
+    margin: 0;
+    color: var(--texto-suave);
+  }
+
+  .responsavel {
+    margin: var(--esp-6) 0 0;
+    font-weight: 500;
+  }
+</style>

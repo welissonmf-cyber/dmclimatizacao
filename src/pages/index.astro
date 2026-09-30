@@ -1,13 +1,32 @@
 ---
-/**
- * PROVISÓRIO (Fase 1): só o hero, para validar a base.
- * A Home completa, na ordem da seção 4 do roteiro, entra na Fase 2.
- */
 import Base from '../layouts/Base.astro';
 import Icone from '../components/Icone.astro';
+import Preencher from '../components/Preencher.astro';
+import FotoPendente from '../components/FotoPendente.astro';
+import Faq from '../components/Faq.astro';
+import LogosClientes from '../components/LogosClientes.astro';
 import { empresa, linkTel, linkWhatsApp } from '../data/empresa';
+import { servicos } from '../data/servicos';
+import { faqGeral } from '../data/faq';
 
 const mensagem = 'Olá! Vim pela página inicial do site e gostaria de pedir um orçamento.';
+const mensagemPmoc = 'Olá! Vim pelo site e gostaria de agendar uma visita técnica para PMOC da minha empresa.';
+
+const beneficios = [
+  { titulo: 'Rende mais', texto: 'Gela mais rápido e mantém a temperatura sem esforço.' },
+  { titulo: 'Gasta menos energia', texto: 'Filtros e serpentinas limpos reduzem o consumo na conta de luz.' },
+  { titulo: 'Dura mais', texto: 'O compressor trabalha menos forçado e a vida útil do aparelho aumenta.' },
+  { titulo: 'Quebra menos', texto: 'Problemas pequenos são vistos antes de virar troca de peça.' },
+  { titulo: 'Menos corrosão', texto: 'Limpeza e proteção das partes metálicas, principalmente da condensadora.' },
+  { titulo: 'Ar mais saudável', texto: 'Menos fungos, ácaros, bactérias e mofo circulando no ambiente.' },
+];
+
+const etapas = [
+  { titulo: 'Contato', texto: 'Você chama no WhatsApp ou liga e conta o que precisa. Fotos do aparelho ou do local ajudam.' },
+  { titulo: 'Visita e orçamento', texto: 'Avaliamos o local ou o equipamento e passamos o orçamento detalhado.' },
+  { titulo: 'Execução', texto: 'Equipe própria, com ferramentas e EPIs adequados, no dia e horário combinados.' },
+  { titulo: 'Garantia e relatório', texto: 'Serviço com garantia e, para empresas, relatório técnico do que foi feito.' },
+];
 ---
 
 <Base
@@ -15,47 +34,237 @@ const mensagem = 'Olá! Vim pela página inicial do site e gostaria de pedir um 
   descricao="Instalação, manutenção preventiva e corretiva, higienização e PMOC de ar condicionado em Belo Horizonte e região. Atendimento residencial, comercial e industrial."
   mensagemWhatsApp={mensagem}
 >
+  <!-- 1. Hero -->
   <section class="hero">
-    <div class="container hero__conteudo">
-      <h1>Instalação e manutenção de ar condicionado em BH e região</h1>
-      <p class="hero__sub">
-        Atendimento residencial, comercial e industrial: instalação, manutenção preventiva e
-        corretiva, higienização e contratos de PMOC para empresas.
-      </p>
-      <div class="hero__acoes">
+    <div class="container grade-2">
+      <div>
+        <h1>Instalação e manutenção de ar condicionado em BH e região</h1>
+        <p class="hero__sub">
+          Atendimento residencial, comercial e industrial: instalação, manutenção preventiva e
+          corretiva, higienização e contratos de PMOC para empresas.
+        </p>
+        <div class="hero__acoes">
+          <a class="btn btn--acao" href={linkWhatsApp(mensagem)} target="_blank" rel="noopener">
+            <Icone nome="whatsapp" />
+            Pedir orçamento no WhatsApp
+          </a>
+          <a class="btn btn--contorno" href={linkTel(empresa.telefones[0].numero)}>
+            <Icone nome="telefone" />
+            Ligar agora
+          </a>
+        </div>
+      </div>
+      <FotoPendente descricao="técnico da DM uniformizado instalando um split" proporcao="5 / 4" />
+    </div>
+  </section>
+
+  <!-- 2. Faixa de confiança -->
+  <section class="confianca" aria-label="Por que confiar na DM Climatização">
+    <ul class="container confianca__lista" role="list">
+      <li>
+        <strong>{empresa.anoFundacao ? `Desde ${empresa.anoFundacao}` : <Preencher>ano de fundação</Preencher>}</strong>
+        <span>no mercado de climatização</span>
+      </li>
+      <li>
+        <strong>Empresa registrada</strong>
+        <span>CNPJ {empresa.cnpj}</span>
+      </li>
+      <li>
+        <strong>Garantia</strong>
+        <span>em todo serviço executado</span>
+      </li>
+      <li>
+        <strong>Veículos próprios</strong>
+        <span>para atender no dia combinado</span>
+      </li>
+      <li>
+        <strong>Equipe treinada</strong>
+        <span>pelos fabricantes das principais marcas</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- 3. Serviços -->
+  <section class="secao" id="servicos">
+    <div class="container">
+      <div class="intro-secao">
+        <p class="rotulo">Serviços</p>
+        <h2>Do aparelho da sua casa ao sistema central da empresa</h2>
+        <p>Atendemos todos os tipos de equipamento: janela, split hi-wall, cassete, piso-teto, multi-split, dutado e VRF/VRV.</p>
+      </div>
+      <ul class="servicos" role="list">
+        {
+          servicos.map((s) => (
+            <li class="servico">
+              <h3>
+                <a href={s.href}>{s.titulo}</a>
+              </h3>
+              <p>{s.resumo}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- 4. PMOC -->
+  <section class="secao secao--gelo" id="pmoc">
+    <div class="container grade-2">
+      <div>
+        <p class="rotulo">Para empresas</p>
+        <h2>PMOC: manutenção que a lei exige, sem dor de cabeça</h2>
+        <p>
+          A <strong>Lei 13.589/2018</strong> obriga edifícios de uso público e coletivo com ar
+          condicionado — escritórios, lojas, clínicas, escolas, academias, restaurantes — a manter
+          um Plano de Manutenção, Operação e Controle (PMOC) dos sistemas de climatização.
+        </p>
+        <p>Assumimos o plano completo para a sua empresa ficar em dia com a fiscalização.</p>
+        <a class="btn btn--acao" href={linkWhatsApp(mensagemPmoc)} target="_blank" rel="noopener">
+          <Icone nome="documento" />
+          Solicitar visita técnica
+        </a>
+      </div>
+      <div class="cartao">
+        <h3>O contrato de PMOC inclui</h3>
+        <ul class="lista-check">
+          <li>Levantamento de todos os equipamentos e elaboração do plano</li>
+          <li>ART emitida por engenheiro responsável <Preencher>nome e CREA</Preencher></li>
+          <li>Visitas periódicas de manutenção preventiva conforme o plano</li>
+          <li>Registro de cada atividade e relatório para apresentar à fiscalização</li>
+          <li>Atendimento corretivo prioritário para clientes de contrato</li>
+        </ul>
+        <p><a href="/pmoc.html">Entenda o PMOC em detalhes</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Por que manutenção -->
+  <section class="secao">
+    <div class="container">
+      <div class="intro-secao">
+        <p class="rotulo">Manutenção preventiva</p>
+        <h2>Por que fazer manutenção periodicamente</h2>
+        <p>
+          Em ambiente fechado o ar não se renova: poeira, fungos, ácaros e bactérias ficam presos no
+          aparelho e voltam para o ambiente. A manutenção resolve isso e ainda economiza dinheiro.
+        </p>
+      </div>
+      <ul class="beneficios" role="list">
+        {
+          beneficios.map((b) => (
+            <li>
+              <h3>{b.titulo}</h3>
+              <p>{b.texto}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- 6. Como funciona -->
+  <section class="secao secao--gelo">
+    <div class="container">
+      <div class="intro-secao">
+        <p class="rotulo">Como funciona</p>
+        <h2>Do primeiro contato à garantia</h2>
+      </div>
+      <ol class="etapas">
+        {
+          etapas.map((e) => (
+            <li>
+              <h3>{e.titulo}</h3>
+              <p>{e.texto}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- 7. Clientes -->
+  <section class="secao">
+    <div class="container">
+      <div class="intro-secao">
+        <p class="rotulo">Clientes</p>
+        <h2>Empresas que confiam na DM</h2>
+        <p>Do varejo à indústria, atendemos instalações e contratos de manutenção em BH e região.</p>
+      </div>
+      <LogosClientes />
+      <p class="mais"><a href="/clientes.html">Ver clientes e obras</a></p>
+    </div>
+  </section>
+
+  <!-- 8. Depoimentos -->
+  <section class="secao secao--gelo">
+    <div class="container">
+      <div class="intro-secao">
+        <p class="rotulo">Avaliações</p>
+        <h2>O que dizem os nossos clientes</h2>
+      </div>
+      <div class="cartao">
+        <p><Preencher>3 a 5 depoimentos reais (nome, bairro ou empresa) ou nota e link do Perfil da Empresa no Google</Preencher></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. FAQ -->
+  <section class="secao" id="perguntas">
+    <div class="container">
+      <div class="intro-secao">
+        <p class="rotulo">Dúvidas</p>
+        <h2>Perguntas frequentes</h2>
+      </div>
+      <Faq perguntas={faqGeral} />
+    </div>
+  </section>
+
+  <!-- 10. Área de atendimento + contato -->
+  <section class="secao atendimento" id="atendimento">
+    <div class="container grade-2">
+      <div>
+        <p class="rotulo">Onde atendemos</p>
+        <h2>Atendimento em {empresa.areaResumo}</h2>
+        <p>
+          {empresa.cidadesAtendidas
+            ? empresa.cidadesAtendidas.join(', ')
+            : <Preencher>lista de cidades atendidas (BH, Contagem, Betim, Nova Lima...)</Preencher>}
+        </p>
+        <p class="atendimento__horario">
+          <Icone nome="relogio" />
+          <span>{empresa.horario ?? <Preencher>horário de atendimento</Preencher>}</span>
+        </p>
+      </div>
+      <div class="atendimento__contato">
+        <h3>Fale com a gente</h3>
         <a class="btn btn--acao" href={linkWhatsApp(mensagem)} target="_blank" rel="noopener">
           <Icone nome="whatsapp" />
-          Pedir orçamento no WhatsApp
+          Chamar no WhatsApp
         </a>
-        <a class="btn btn--contorno" href={linkTel(empresa.telefones[0].numero)}>
-          <Icone nome="telefone" />
-          Ligar agora
-        </a>
+        <ul class="atendimento__lista" role="list">
+          {
+            empresa.telefones.map((t) => (
+              <li>
+                <Icone nome="telefone" />
+                <a href={linkTel(t.numero)}>{t.exibicao}</a>
+              </li>
+            ))
+          }
+          <li>
+            <Icone nome="email" />
+            <a href={`mailto:${empresa.email}`}>{empresa.email}</a>
+          </li>
+        </ul>
       </div>
     </div>
   </section>
 </Base>
 
 <style>
+  /* Hero */
   .hero {
-    padding-block: var(--secao);
+    padding-block: var(--esp-7) var(--secao);
     background: linear-gradient(180deg, var(--gelo) 0%, var(--branco) 100%);
-  }
-
-  .hero__conteudo {
-    max-width: 48rem;
-    margin-inline: 0;
-  }
-
-  @media (min-width: 64rem) {
-    .hero__conteudo {
-      margin-inline: auto;
-      max-width: calc(var(--largura-max) + 2 * var(--gutter));
-    }
-    .hero h1,
-    .hero__sub {
-      max-width: 42rem;
-    }
   }
 
   .hero__sub {
@@ -74,5 +283,211 @@ const mensagem = 'Olá! Vim pela página inicial do site e gostaria de pedir um 
     .hero__acoes .btn {
       width: 100%;
     }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hero h1,
+    .hero__sub,
+    .hero__acoes {
+      animation: surgir 0.5s ease-out both;
+    }
+    .hero__sub { animation-delay: 0.08s; }
+    .hero__acoes { animation-delay: 0.16s; }
+
+    @keyframes surgir {
+      from { opacity: 0; transform: translateY(8px); }
+    }
+  }
+
+  /* Faixa de confiança */
+  .confianca {
+    background: var(--azul-tecnico);
+    color: rgb(255 255 255 / 0.8);
+  }
+
+  .confianca__lista {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    gap: var(--esp-4) var(--esp-5);
+    margin: 0;
+    padding-block: var(--esp-5);
+    list-style: none;
+    font-size: var(--fs-sm);
+  }
+
+  .confianca__lista li {
+    display: flex;
+    flex-direction: column;
+    padding-left: var(--esp-3);
+    border-left: 3px solid var(--cobre);
+  }
+
+  .confianca strong {
+    color: var(--branco);
+    font-family: var(--fonte-titulo);
+    font-size: var(--fs-lg);
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  /* Serviços */
+  .servicos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+    gap: var(--esp-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .servico {
+    position: relative;
+    padding: var(--esp-5);
+    border: 1px solid var(--gelo-borda);
+    border-top: 4px solid var(--azul-ar);
+    border-radius: var(--raio);
+    transition: box-shadow 0.15s, border-color 0.15s;
+  }
+
+  .servico:hover {
+    border-top-color: var(--cobre);
+    box-shadow: var(--sombra);
+  }
+
+  .servico h3 {
+    margin-bottom: var(--esp-2);
+  }
+
+  .servico h3 a {
+    color: var(--azul-tecnico);
+    text-decoration: none;
+  }
+
+  /* cartão inteiro clicável */
+  .servico h3 a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .servico p {
+    margin: 0;
+    color: var(--texto-suave);
+  }
+
+  /* Benefícios */
+  .beneficios {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap: var(--esp-5) var(--esp-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .beneficios h3 {
+    margin-bottom: var(--esp-1);
+    padding-top: var(--esp-3);
+    border-top: 2px solid var(--gelo-borda);
+  }
+
+  .beneficios p {
+    margin: 0;
+    color: var(--texto-suave);
+  }
+
+  /* Etapas */
+  .etapas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: var(--esp-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: etapa;
+  }
+
+  .etapas li {
+    counter-increment: etapa;
+  }
+
+  .etapas li::before {
+    content: counter(etapa);
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-bottom: var(--esp-3);
+    border-radius: 50%;
+    background: var(--azul-tecnico);
+    color: var(--branco);
+    font-family: var(--fonte-titulo);
+    font-size: var(--fs-lg);
+    font-weight: 700;
+  }
+
+  .etapas h3 {
+    margin-bottom: var(--esp-1);
+  }
+
+  .etapas p {
+    margin: 0;
+    color: var(--texto-suave);
+  }
+
+  .mais {
+    margin: var(--esp-5) 0 0;
+    font-weight: 500;
+  }
+
+  /* Atendimento */
+  .atendimento {
+    border-top: 1px solid var(--gelo-borda);
+  }
+
+  .atendimento .grade-2 {
+    align-items: start;
+  }
+
+  .atendimento__horario {
+    display: flex;
+    gap: var(--esp-2);
+    align-items: center;
+  }
+
+  .atendimento__horario :global(svg) {
+    color: var(--azul-ar);
+  }
+
+  .atendimento__contato {
+    padding: var(--esp-6);
+    border-radius: var(--raio-lg);
+    background: var(--gelo);
+  }
+
+  .atendimento__lista {
+    margin: var(--esp-5) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .atendimento__lista li {
+    display: flex;
+    gap: var(--esp-3);
+    align-items: center;
+  }
+
+  .atendimento__lista li + li {
+    margin-top: var(--esp-3);
+  }
+
+  .atendimento__lista :global(svg) {
+    width: 1.25rem;
+    color: var(--azul-ar);
+  }
+
+  .atendimento__lista a {
+    font-size: var(--fs-lg);
+    font-weight: 500;
   }
 </style>

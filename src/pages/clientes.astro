@@ -1,0 +1,87 @@
+---
+import Base from '../layouts/Base.astro';
+import CabecalhoPagina from '../components/CabecalhoPagina.astro';
+import ChamadaFinal from '../components/ChamadaFinal.astro';
+import FotoPendente from '../components/FotoPendente.astro';
+import LogosClientes from '../components/LogosClientes.astro';
+import Preencher from '../components/Preencher.astro';
+
+const mensagem = 'Olá! Vim pela página de clientes do site e gostaria de um orçamento para a minha empresa.';
+
+// Casos reais de obra. Substituir os marcadores por: cliente (se autorizado) ou segmento,
+// serviço, quantidade de equipamentos, ano e foto.
+const casos = [
+  { exemplo: 'Loja no centro de BH — instalação de 8 cassetes', foto: 'loja com cassetes instalados' },
+  { exemplo: 'Indústria em Contagem — contrato de PMOC desde 20XX', foto: 'casa de máquinas ou condensadoras da indústria' },
+  { exemplo: 'Escritório — sistema VRF com 12 evaporadoras', foto: 'condensadoras VRF na cobertura' },
+];
+---
+
+<Base
+  titulo="Clientes e Obras de Ar Condicionado em BH | DM Climatização"
+  descricao="Empresas do varejo, serviços e indústria atendidas pela DM Climatização em Belo Horizonte e região: instalações, manutenção e contratos de PMOC."
+  mensagemWhatsApp={mensagem}
+>
+  <CabecalhoPagina
+    rotulo="Clientes e obras"
+    titulo="Clientes e obras"
+    apoio="Do varejo à indústria: algumas das empresas e dos trabalhos que já passaram pela DM Climatização."
+  />
+
+  <section class="secao">
+    <div class="container">
+      <div class="intro-secao">
+        <h2>Obras em destaque</h2>
+        <p>Cada obra com o que foi feito, onde e quando.</p>
+      </div>
+      <ul class="casos" role="list">
+        {
+          casos.map((c) => (
+            <li class="caso">
+              <FotoPendente descricao={c.foto} proporcao="3 / 2" />
+              <h3>
+                <Preencher>caso real — ex.: {c.exemplo}</Preencher>
+              </h3>
+              <p><Preencher>2 ou 3 linhas: o desafio, o que foi feito e o resultado</Preencher></p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="secao secao--gelo">
+    <div class="container">
+      <div class="intro-secao">
+        <h2>Empresas atendidas</h2>
+      </div>
+      <LogosClientes />
+    </div>
+  </section>
+
+  <ChamadaFinal
+    titulo="Sua empresa pode ser a próxima"
+    texto="Instalação, manutenção ou PMOC: conte o que precisa e agendamos uma visita técnica."
+    mensagemWhatsApp={mensagem}
+  />
+</Base>
+
+<style>
+  .casos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+    gap: var(--esp-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .caso h3 {
+    margin: var(--esp-4) 0 var(--esp-2);
+    font-size: var(--fs-lg);
+  }
+
+  .caso p {
+    margin: 0;
+  }
+</style>

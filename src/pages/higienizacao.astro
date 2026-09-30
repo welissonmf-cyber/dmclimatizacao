@@ -1,0 +1,158 @@
+---
+import Base from '../layouts/Base.astro';
+import CabecalhoPagina from '../components/CabecalhoPagina.astro';
+import ChamadaFinal from '../components/ChamadaFinal.astro';
+import FotoPendente from '../components/FotoPendente.astro';
+import Icone from '../components/Icone.astro';
+import { linkWhatsApp } from '../data/empresa';
+
+const mensagem = 'Olá! Vim pela página de higienização do site e gostaria de agendar uma limpeza do ar condicionado.';
+
+const sinais = [
+  'Cheiro de mofo ou de "guardado" quando liga',
+  'Água pingando da unidade interna',
+  'Espirros, nariz entupido ou alergia piorando no ambiente',
+  'Demora para gelar ou não chega na temperatura',
+  'Pontos pretos na saída de ar',
+  'Mais de 6 meses desde a última limpeza',
+];
+
+const passos = [
+  'Proteção de parede, móveis e piso com capa coletora',
+  'Desmontagem da carenagem e limpeza dos filtros',
+  'Lavagem da serpentina e da turbina com produto bactericida',
+  'Limpeza da bandeja e desobstrução do dreno',
+  'Limpeza da condensadora (unidade externa)',
+  'Teste de funcionamento, temperatura e dreno',
+];
+---
+
+<Base
+  titulo="Limpeza e Higienização de Ar Condicionado em BH | DM Climatização"
+  descricao="Higienização completa de ar condicionado split em Belo Horizonte e região: remove fungos, bactérias e mau cheiro, e faz o aparelho gelar melhor gastando menos energia."
+  mensagemWhatsApp={mensagem}
+>
+  <CabecalhoPagina
+    rotulo="Limpeza e higienização"
+    titulo="Limpeza e higienização de ar condicionado em BH"
+    apoio="Higienização completa que elimina fungos, bactérias e mau cheiro — e faz o aparelho voltar a gelar como novo."
+  >
+    <a class="btn btn--acao" href={linkWhatsApp(mensagem)} target="_blank" rel="noopener">
+      <Icone nome="whatsapp" />
+      Agendar higienização
+    </a>
+  </CabecalhoPagina>
+
+  <section class="secao">
+    <div class="container grade-2">
+      <div>
+        <h2>Sinais de que seu aparelho precisa de limpeza</h2>
+        <ul class="lista-check">
+          {sinais.map((s) => <li>{s}</li>)}
+        </ul>
+      </div>
+      <FotoPendente descricao="antes e depois da serpentina de um split higienizado" />
+    </div>
+  </section>
+
+  <section class="secao secao--gelo">
+    <div class="container">
+      <div class="intro-secao">
+        <h2>Limpeza simples ou higienização completa?</h2>
+        <p>As duas têm lugar, mas só a completa resolve cheiro e sujeira acumulada.</p>
+      </div>
+      <div class="comparacao">
+        <div class="cartao">
+          <h3>Limpeza simples</h3>
+          <p>Limpeza dos filtros e da parte externa do aparelho. Rápida, boa para manter entre uma higienização e outra — e os filtros você mesmo pode lavar todo mês.</p>
+        </div>
+        <div class="cartao cartao--destaque">
+          <h3>Higienização completa</h3>
+          <p>Desmontagem da evaporadora, lavagem da serpentina e da turbina com bactericida, bandeja, dreno e condensadora. Remove o que fica escondido dentro do aparelho.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao">
+    <div class="container grade-2 como">
+      <div>
+        <h2>Como fazemos a higienização</h2>
+        <p>Trabalho limpo, com o ambiente protegido do começo ao fim.</p>
+      </div>
+      <ol class="passos">
+        {passos.map((p) => <li>{p}</li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section class="secao secao--gelo">
+    <div class="container texto-corrido">
+      <h2>De quanto em quanto tempo higienizar</h2>
+      <ul class="lista-check">
+        <li><strong>Residências:</strong> a cada 6 meses, com filtros lavados todo mês.</li>
+        <li><strong>Escritórios, lojas e uso diário intenso:</strong> a cada 3 meses.</li>
+        <li><strong>Empresas de uso coletivo:</strong> conforme o <a href="/pmoc.html">PMOC</a>, que é obrigatório por lei.</li>
+      </ul>
+    </div>
+  </section>
+
+  <ChamadaFinal
+    titulo="Hora de limpar o seu ar condicionado?"
+    texto="Diga quantos aparelhos e o bairro que respondemos com o orçamento e a data disponível."
+    mensagemWhatsApp={mensagem}
+    rotuloBotao="Agendar higienização"
+  />
+</Base>
+
+<style>
+  .comparacao {
+    display: grid;
+    gap: var(--esp-5);
+  }
+
+  @media (min-width: 48rem) {
+    .comparacao {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .cartao--destaque {
+    border-color: var(--azul-ar);
+    box-shadow: inset 0 4px 0 var(--azul-ar);
+  }
+
+  .como {
+    align-items: start;
+  }
+
+  .passos {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: passo;
+  }
+
+  .passos li {
+    counter-increment: passo;
+    position: relative;
+    padding: var(--esp-3) 0 var(--esp-3) 3rem;
+    border-bottom: 1px solid var(--gelo-borda);
+  }
+
+  .passos li::before {
+    content: counter(passo);
+    position: absolute;
+    left: 0;
+    top: var(--esp-3);
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: var(--gelo);
+    color: var(--azul-tecnico);
+    font-family: var(--fonte-titulo);
+    font-weight: 700;
+  }
+</style>

@@ -1,0 +1,111 @@
+---
+import Base from '../layouts/Base.astro';
+import CabecalhoPagina from '../components/CabecalhoPagina.astro';
+import ChamadaFinal from '../components/ChamadaFinal.astro';
+import Faq from '../components/Faq.astro';
+import FotoPendente from '../components/FotoPendente.astro';
+import Icone from '../components/Icone.astro';
+import { linkWhatsApp } from '../data/empresa';
+import type { Pergunta } from '../data/faq';
+
+const mensagem = 'Olá! Vim pela página de instalação do site e gostaria de um orçamento para instalar ar condicionado.';
+
+const inclui = [
+  'Visita técnica e escolha do melhor ponto para as unidades interna e externa',
+  'Tubulação de cobre com isolamento térmico, na medida certa',
+  'Dreno com caimento correto, para não pingar',
+  'Conferência da parte elétrica e disjuntor adequado ao aparelho',
+  'Vácuo na tubulação antes de liberar o gás',
+  'Teste de funcionamento e orientação de uso',
+];
+
+const paraOrcamento = [
+  'Modelo e potência do aparelho (BTUs)',
+  'Foto da parede onde vai a unidade interna',
+  'Foto de onde pode ficar a condensadora',
+  'Andar do imóvel e se há acesso pela área externa',
+];
+
+const faqInstalacao: Pergunta[] = [
+  {
+    pergunta: 'Quantos BTUs preciso para o meu ambiente?',
+    resposta:
+      'Depende do tamanho, da incidência de sol, do número de pessoas e de equipamentos no local. Como referência inicial, fala-se em cerca de 600 BTUs por m², mas fazemos o cálculo certo na visita para não comprar um aparelho fraco ou superdimensionado.',
+  },
+  {
+    pergunta: 'Por que fazer o vácuo na tubulação?',
+    resposta:
+      'O vácuo retira ar e umidade da tubulação antes de liberar o gás. Sem ele, o compressor trabalha com umidade, perde rendimento e pode queimar antes do tempo. É etapa obrigatória na instalação correta.',
+  },
+  {
+    pergunta: 'Posso deixar a tubulação pronta durante a obra?',
+    resposta:
+      'Pode e é o ideal. A infraestrutura embutida (tubulação, dreno e ponto elétrico) é feita antes do reboco e do acabamento, e o aparelho é instalado depois, sem quebrar parede.',
+  },
+];
+---
+
+<Base
+  titulo="Instalação de Ar Condicionado em BH: Split, Cassete e VRF | DM Climatização"
+  descricao="Instalação de ar condicionado split, inverter, cassete, piso-teto, multi-split e VRF em Belo Horizonte e região, com vácuo, dreno correto e garantia no serviço."
+  mensagemWhatsApp={mensagem}
+>
+  <CabecalhoPagina
+    rotulo="Instalação"
+    titulo="Instalação de ar condicionado em BH e região"
+    apoio="Split, inverter, cassete, piso-teto, multi-split e VRF — instalados do jeito que o fabricante manda, com garantia no serviço."
+  >
+    <a class="btn btn--acao" href={linkWhatsApp(mensagem)} target="_blank" rel="noopener">
+      <Icone nome="whatsapp" />
+      Pedir orçamento de instalação
+    </a>
+  </CabecalhoPagina>
+
+  <section class="secao">
+    <div class="container grade-2">
+      <div>
+        <h2>O que está incluído</h2>
+        <p>Instalação mal feita é a maior causa de aparelho que pinga, faz barulho ou queima o compressor. Por isso não pulamos etapas:</p>
+        <ul class="lista-check">
+          {inclui.map((i) => <li>{i}</li>)}
+        </ul>
+      </div>
+      <FotoPendente descricao="técnico fazendo vácuo na tubulação de um split" />
+    </div>
+  </section>
+
+  <section class="secao secao--gelo">
+    <div class="container grade-2">
+      <div>
+        <h2>Infraestrutura para obra</h2>
+        <p>
+          Está construindo ou reformando? Deixamos a tubulação de cobre, o dreno e o ponto elétrico
+          embutidos antes do acabamento. Depois é só instalar o aparelho, sem quebrar parede nem
+          deixar tubulação aparente.
+        </p>
+        <p>Também atendemos construtoras e projetos de sistemas maiores, como <a href="/servicos.html#projetos">VRF/VRV e dutados</a>.</p>
+      </div>
+      <div class="cartao">
+        <h3>Para agilizar o orçamento, envie</h3>
+        <ul class="lista-check">
+          {paraOrcamento.map((i) => <li>{i}</li>)}
+        </ul>
+        <a class="btn btn--acao btn--sm" href={linkWhatsApp('Olá! Vim pelo site e quero um orçamento de instalação. Seguem as fotos e o modelo do aparelho:')} target="_blank" rel="noopener">
+          <Icone nome="whatsapp" />
+          Enviar fotos pelo WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao">
+    <div class="container">
+      <div class="intro-secao">
+        <h2>Dúvidas sobre instalação</h2>
+      </div>
+      <Faq perguntas={faqInstalacao} />
+    </div>
+  </section>
+
+  <ChamadaFinal mensagemWhatsApp={mensagem} rotuloBotao="Pedir orçamento de instalação" />
+</Base>

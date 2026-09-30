@@ -1,0 +1,121 @@
+---
+import Base from '../layouts/Base.astro';
+import CabecalhoPagina from '../components/CabecalhoPagina.astro';
+import ChamadaFinal from '../components/ChamadaFinal.astro';
+import FotoPendente from '../components/FotoPendente.astro';
+import Preencher from '../components/Preencher.astro';
+import { empresa } from '../data/empresa';
+
+const mensagem = 'Olá! Vim pela página "A empresa" do site e gostaria de conversar sobre um serviço.';
+const anos = empresa.anoFundacao ? new Date().getFullYear() - empresa.anoFundacao : null;
+
+const diferenciais = [
+  { titulo: 'Equipe própria', texto: 'Técnicos, mecânicos e eletricistas da casa, treinados pelos fabricantes das principais marcas.' },
+  { titulo: 'Engenharia', texto: 'Engenheiro responsável para projetos, laudos e PMOC com ART.' },
+  { titulo: 'Veículos próprios', texto: 'Chegamos no dia e horário combinados, com o material necessário.' },
+  { titulo: 'Ferramentas e segurança', texto: 'Equipamentos adequados para cada serviço e EPIs para trabalho em altura.' },
+  { titulo: 'Garantia', texto: 'Todo serviço executado tem garantia.' },
+  { titulo: 'Empresa registrada', texto: `CNPJ ${empresa.cnpj}.` },
+];
+---
+
+<Base
+  titulo="Sobre a DM Climatização | Ar Condicionado em Belo Horizonte"
+  descricao="Conheça a DM Climatização: empresa de Belo Horizonte especializada em instalação, manutenção e PMOC de ar condicionado, com equipe própria e engenheiro responsável."
+  mensagemWhatsApp={mensagem}
+>
+  <CabecalhoPagina
+    rotulo="A empresa"
+    titulo="Sobre a DM Climatização"
+    apoio="Climatização residencial, comercial e industrial em Belo Horizonte e região, com equipe própria e responsabilidade técnica."
+  />
+
+  <section class="secao">
+    <div class="container grade-2">
+      <div class="texto-corrido">
+        <h2>Nossa história</h2>
+        <p>
+          {anos
+            ? `Há ${anos} anos no mercado, a DM Climatização`
+            : <>Desde <Preencher>ano de fundação</Preencher>, a DM Climatização</>}
+          {' '}atua em refrigeração residencial, comercial e industrial, com projetos de
+          climatização, instalação e manutenção preventiva e corretiva de ar condicionado.
+        </p>
+        <p>
+          A empresa foi criada para oferecer um serviço técnico bem feito e bem explicado: o
+          cliente sabe o que vai ser feito, quanto custa e o que foi entregue no final.
+        </p>
+        <p>
+          <Preencher>1 ou 2 frases sobre a origem: quem fundou, experiência anterior, marcos (primeiro contrato grande, número de clientes atendidos)</Preencher>
+        </p>
+      </div>
+      <FotoPendente descricao="equipe da DM uniformizada ao lado do veículo da empresa" />
+    </div>
+  </section>
+
+  <section class="secao secao--gelo">
+    <div class="container">
+      <div class="intro-secao">
+        <h2>Por que escolher a DM</h2>
+      </div>
+      <ul class="diferenciais" role="list">
+        {
+          diferenciais.map((d) => (
+            <li class="cartao">
+              <h3>{d.titulo}</h3>
+              <p>{d.texto}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="secao">
+    <div class="container grade-2 equipe">
+      <div>
+        <h2>Equipe e responsável técnico</h2>
+        <p>
+          Nossa equipe reúne administradores, engenheiro, técnicos, mecânicos e eletricistas com
+          experiência em empresas tradicionais do ramo.
+        </p>
+        <ul class="lista-check">
+          <li>
+            Responsável técnico:{' '}
+            {empresa.responsavelTecnico
+              ? `${empresa.responsavelTecnico.nome}, CREA ${empresa.responsavelTecnico.crea}`
+              : <Preencher>nome e CREA do engenheiro</Preencher>}
+          </li>
+          <li><Preencher>quantidade de técnicos na equipe</Preencher></li>
+          <li><Preencher>marcas em que a equipe tem treinamento ou credenciamento comprovado</Preencher></li>
+        </ul>
+      </div>
+      <FotoPendente descricao="técnicos em serviço numa casa de máquinas ou cobertura" />
+    </div>
+  </section>
+
+  <ChamadaFinal mensagemWhatsApp={mensagem} />
+</Base>
+
+<style>
+  .diferenciais {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    gap: var(--esp-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .diferenciais h3 {
+    margin-bottom: var(--esp-2);
+  }
+
+  .diferenciais p {
+    color: var(--texto-suave);
+  }
+
+  .equipe {
+    align-items: start;
+  }
+</style>

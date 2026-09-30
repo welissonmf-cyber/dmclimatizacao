@@ -1,0 +1,17 @@
+---
+/** Renderiza texto simples vindo de src/data, destacando trechos "[PREENCHER: ...]". */
+import Preencher from './Preencher.astro';
+
+interface Props {
+  texto: string;
+}
+
+const partes = Astro.props.texto.split(/(\[PREENCHER:[^\]]*\])/);
+---
+
+{
+  partes.map((parte) => {
+    const m = parte.match(/^\[PREENCHER:\s*([^\]]*)\]$/);
+    return m ? <Preencher>{m[1]}</Preencher> : parte;
+  })
+}

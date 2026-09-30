@@ -1,0 +1,50 @@
+---
+/** Topo das páginas internas: rótulo, título (único h1 da página) e linha de apoio. */
+interface Props {
+  rotulo?: string;
+  titulo: string;
+  apoio?: string;
+}
+
+const { rotulo, titulo, apoio } = Astro.props;
+---
+
+<section class="cab-pagina">
+  <div class="container">
+    {rotulo && <p class="cab-pagina__rotulo">{rotulo}</p>}
+    <h1>{titulo}</h1>
+    {apoio && <p class="cab-pagina__apoio">{apoio}</p>}
+    <slot />
+  </div>
+</section>
+
+<style>
+  .cab-pagina {
+    padding-block: var(--esp-7) var(--esp-6);
+    background: linear-gradient(180deg, var(--gelo) 0%, var(--branco) 100%);
+    border-bottom: 1px solid var(--gelo-borda);
+  }
+
+  .cab-pagina h1,
+  .cab-pagina__apoio {
+    max-width: 44rem;
+  }
+
+  .cab-pagina__rotulo {
+    margin-bottom: var(--esp-2);
+    color: var(--cobre);
+    font-family: var(--fonte-titulo);
+    font-size: var(--fs-base);
+    font-weight: 600;
+  }
+
+  .cab-pagina__apoio {
+    margin-bottom: 0;
+    color: var(--texto-suave);
+    font-size: var(--fs-lg);
+  }
+
+  .cab-pagina :global(.btn) {
+    margin-top: var(--esp-5);
+  }
+</style>

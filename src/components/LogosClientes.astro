@@ -1,0 +1,57 @@
+---
+/** Logos de clientes em tons de cinza, sem link externo. */
+import { Image } from 'astro:assets';
+import Preencher from './Preencher.astro';
+import { clientesExibidos, haClientesPendentes } from '../data/clientes';
+---
+
+{haClientesPendentes && (
+  <p class="logos__aviso">
+    <Preencher>confirmar autorização de uso de cada logo antes de publicar</Preencher>
+  </p>
+)}
+<ul class="logos" role="list">
+  {
+    clientesExibidos.map((c) => (
+      <li class="logos__item">
+        <Image src={c.logo} alt={c.nome} height={56} densities={[1, 2]} />
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .logos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr));
+    gap: var(--esp-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .logos__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 5.5rem;
+    padding: var(--esp-3);
+    border: 1px solid var(--gelo-borda);
+    border-radius: var(--raio);
+    background: var(--branco);
+  }
+
+  .logos__item img {
+    width: auto;
+    max-width: 100%;
+    max-height: 3.5rem;
+    object-fit: contain;
+    filter: grayscale(1);
+    opacity: 0.75;
+    mix-blend-mode: multiply;
+  }
+
+  .logos__aviso {
+    margin-bottom: var(--esp-4);
+  }
+</style>

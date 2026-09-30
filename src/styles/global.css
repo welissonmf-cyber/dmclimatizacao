@@ -62,6 +62,7 @@ ol {
 
 a {
   color: var(--azul-ar);
+  overflow-wrap: anywhere;
   text-underline-offset: 0.15em;
 }
 
@@ -133,6 +134,7 @@ a:hover {
   font-size: var(--fs-lg);
   font-weight: 600;
   line-height: 1.1;
+  text-align: center;
   text-decoration: none;
   cursor: pointer;
   transition: background-color 0.15s, color 0.15s, border-color 0.15s;
@@ -181,4 +183,121 @@ a:hover {
   min-height: 2.5rem;
   padding: var(--esp-2) var(--esp-4);
   font-size: var(--fs-base);
+}
+
+/* Blocos de conteúdo reutilizados nas páginas */
+.rotulo {
+  margin-bottom: var(--esp-2);
+  color: var(--cobre);
+  font-family: var(--fonte-titulo);
+  font-size: var(--fs-base);
+  font-weight: 600;
+}
+
+.intro-secao {
+  max-width: 44rem;
+  margin-bottom: var(--esp-6);
+}
+
+.intro-secao > p:last-child {
+  margin-bottom: 0;
+  color: var(--texto-suave);
+  font-size: var(--fs-lg);
+}
+
+.grade-2 {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--esp-6);
+}
+
+@media (min-width: 56rem) {
+  .grade-2 {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: var(--esp-8);
+  }
+}
+
+.lista-check {
+  padding: 0;
+  list-style: none;
+}
+
+.lista-check li {
+  position: relative;
+  padding-left: 1.9rem;
+}
+
+.lista-check li + li {
+  margin-top: var(--esp-3);
+}
+
+.lista-check li::before {
+  content: '';
+  position: absolute;
+  left: 0.2rem;
+  top: 0.35em;
+  width: 0.5rem;
+  height: 0.9rem;
+  border-right: 3px solid var(--azul-ar);
+  border-bottom: 3px solid var(--azul-ar);
+  transform: rotate(45deg);
+}
+
+.texto-corrido {
+  max-width: 44rem;
+}
+
+.texto-corrido h2 {
+  margin-top: var(--esp-7);
+}
+
+.texto-corrido h3 {
+  margin-top: var(--esp-6);
+}
+
+.cartao {
+  padding: var(--esp-5);
+  border: 1px solid var(--gelo-borda);
+  border-radius: var(--raio-lg);
+  background: var(--branco);
+}
+
+.cartao > :last-child {
+  margin-bottom: 0;
+}
+
+.tabela-rolagem {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.tabela {
+  width: 100%;
+  min-width: 34rem;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+}
+
+.tabela th,
+.tabela td {
+  padding: var(--esp-3) var(--esp-4);
+  border-bottom: 1px solid var(--gelo-borda);
+  text-align: left;
+  vertical-align: top;
+}
+
+.tabela thead th {
+  background: var(--gelo);
+  color: var(--azul-tecnico);
+  font-family: var(--fonte-titulo);
+  font-size: var(--fs-base);
+  font-weight: 600;
+}
+
+.tabela tbody th {
+  color: var(--azul-tecnico);
+  font-weight: 500;
+  white-space: nowrap;
 }

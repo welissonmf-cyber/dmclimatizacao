@@ -1,0 +1,46 @@
+---
+/**
+ * Espaço reservado para foto real de serviço. Substituir por <Image> assim que
+ * as fotos chegarem — banco de imagem genérico só como último recurso.
+ */
+interface Props {
+  descricao: string;
+  proporcao?: string;
+  class?: string;
+}
+
+const { descricao, proporcao = '4 / 3', class: classe } = Astro.props;
+---
+
+<div class:list={['foto-pendente', classe]} style={`aspect-ratio: ${proporcao}`} role="img" aria-label={`Foto pendente: ${descricao}`}>
+  <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M4 7h3l2-2.5h6L17 7h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z" />
+    <circle cx="12" cy="13" r="3.5" />
+  </svg>
+  <span>[PREENCHER: foto — {descricao}]</span>
+</div>
+
+<style>
+  .foto-pendente {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--esp-3);
+    width: 100%;
+    padding: var(--esp-5);
+    border: 2px dashed var(--gelo-borda);
+    border-radius: var(--raio-lg);
+    background:
+      repeating-linear-gradient(135deg, transparent 0 14px, rgb(10 120 181 / 0.04) 14px 28px),
+      var(--gelo);
+    color: var(--azul-ar);
+    text-align: center;
+  }
+
+  .foto-pendente span {
+    max-width: 22rem;
+    color: var(--texto-suave);
+    font-size: var(--fs-sm);
+  }
+</style>
