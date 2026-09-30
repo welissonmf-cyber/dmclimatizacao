@@ -4,12 +4,12 @@ Tudo abaixo aparece no site como `[PREENCHER: ...]` (destacado em amarelo) ou co
 Onde preencher: quase tudo em `src/data/empresa.ts`; o resto indicado em cada item.
 
 ## Dados da empresa (`src/data/empresa.ts`)
-- [ ] **Ano de fundação** — Home (faixa de confiança) e Sobre. O CNPJ sugere ~2014.
+- [x] Ano de fundação: 2014 (início de atividade no CNPJ em 07/08/2014).
 - [ ] **Cidades atendidas** — Home, Contato, rodapé e dados para o Google.
 - [ ] **Horário de atendimento** — Home, Contato e rodapé.
 - [ ] **Atende fim de semana / emergência?** — resposta do FAQ em `src/data/faq.ts`.
 - [x] Técnico responsável: Denis Guedes de Oliveira, registrado no CFT (TRT). Nº de registro não publicado (tem formato de CPF; informar só no TRT/contrato).
-- [ ] **Razão social** — Política de privacidade.
+- [x] Razão social: Denis Guedes de Oliveira (publicada sem o CPF que consta no nome empresarial).
 - [ ] Endereço (opcional; só se houver atendimento ao público).
 
 ## Sobre (`src/pages/sobre.astro`)

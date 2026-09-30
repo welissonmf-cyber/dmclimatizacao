@@ -15,7 +15,8 @@ export interface Telefone {
 
 export const empresa = {
   nome: 'DM Climatização',
-  razaoSocial: null as string | null, // PREENCHER: razão social conforme CNPJ
+  // Nome empresarial na Receita inclui o CPF (empresário individual); publicar sem ele.
+  razaoSocial: 'Denis Guedes de Oliveira' as string | null,
   cnpj: '20.795.576/0001-08',
   site: 'https://dmclimatizacao.com.br',
   email: 'denis@dmclimatizacao.com.br',
@@ -44,7 +45,7 @@ export const empresa = {
   horario: null as string | null, // PREENCHER: ex. "Seg a sex, 8h às 18h · Sáb, 8h às 12h"
   atendeEmergencia: null as boolean | null,
 
-  anoFundacao: null as number | null, // PREENCHER: CNPJ sugere ~2014
+  anoFundacao: 2014 as number | null, // início de atividade no CNPJ: 07/08/2014
   /** Técnico responsável, registrado no CFT (emite TRT). Não publicar o nº de registro: tem formato de CPF. */
   responsavelTecnico: 'Denis Guedes de Oliveira' as string | null,
 } as const;
