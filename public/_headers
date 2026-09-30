@@ -1,0 +1,13 @@
+# Cloudflare Pages — cabeçalhos HTTP
+
+# Endereço de teste (*.pages.dev) fora do Google; só o domínio oficial é indexado.
+https://:project.pages.dev/*
+  X-Robots-Tag: noindex
+
+# Arquivos com hash no nome: cache de 1 ano
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/*
+  X-Frame-Options: SAMEORIGIN
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
