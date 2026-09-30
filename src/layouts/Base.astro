@@ -25,9 +25,8 @@ interface Props {
 
 const { titulo, descricao, mensagemWhatsApp, jsonLd = [], imagemOg = '/og-imagem.png', semIndexar = false } = Astro.props;
 
-// /index.html → /   ·   /servicos (dev) → /servicos.html
-let caminho = Astro.url.pathname.replace(/\/index(\.html)?$/, '/');
-if (caminho !== '/' && !caminho.endsWith('.html')) caminho = `${caminho.replace(/\/$/, '')}.html`;
+// URLs sem extensão, como o Cloudflare Pages serve: /index.html → /  ·  /servicos.html → /servicos
+const caminho = Astro.url.pathname.replace(/\/index(\.html)?$/, '/').replace(/\.html$/, '').replace(/(.)\/$/, '$1');
 const canonical = new URL(caminho, Astro.site).href;
 const og = new URL(imagemOg, Astro.site).href;
 ---

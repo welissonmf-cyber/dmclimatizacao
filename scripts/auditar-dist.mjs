@@ -40,7 +40,8 @@ for (const f of paginas) {
 
   for (const [, url, ancora] of h.matchAll(/href="(\/[^"#?]*)(#[^"]*)?"/g)) {
     if (url.startsWith('/_astro')) continue;
-    const alvo = url === '/' ? 'index.html' : url.slice(1);
+    // URLs sem extensão (/servicos) são servidas a partir de servicos.html
+    const alvo = url === '/' ? 'index.html' : /\.\w+$/.test(url) ? url.slice(1) : `${url.slice(1)}.html`;
     if (!existsSync(join(DIST, alvo))) problemas.push(`${f}: link quebrado ${url}`);
     else if (ancora && alvo.endsWith('.html') && !readFileSync(join(DIST, alvo), 'utf8').includes(`id="${ancora.slice(1)}"`))
       problemas.push(`${f}: âncora inexistente ${url}${ancora}`);

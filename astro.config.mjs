@@ -4,6 +4,7 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   site: 'https://dmclimatizacao.com.br',
   output: 'static',
-  // Mantém as URLs antigas (servicos.html, sobre.html...) já indexadas pelo Google.
+  // Gera servicos.html, sobre.html... O Cloudflare Pages serve como /servicos e redireciona
+  // as URLs antigas com .html (já indexadas pelo Google) para a versão sem extensão.
   build: { format: 'file' },
 });

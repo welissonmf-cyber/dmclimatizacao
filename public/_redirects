@@ -1,3 +1,6 @@
-# Cloudflare Pages — redirects permanentes das URLs do site antigo
-/portfolio.html  /clientes.html  301
-/portifolio.html /clientes.html  301
+# Cloudflare Pages — redirects permanentes das URLs do site antigo.
+# servicos.html → /servicos etc. o próprio Cloudflare Pages já faz.
+/portfolio.html  /clientes  301
+/portfolio       /clientes  301
+/portifolio.html /clientes  301
+/portifolio      /clientes  301

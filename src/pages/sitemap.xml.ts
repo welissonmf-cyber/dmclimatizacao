@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 
-// Gerado a partir dos arquivos de página, com as URLs .html usadas em produção.
+// Gerado a partir dos arquivos de página, com as URLs sem extensão do Cloudflare Pages.
 const paginas = import.meta.glob('./*.astro');
 
 export const GET: APIRoute = ({ site }) => {
@@ -8,7 +8,7 @@ export const GET: APIRoute = ({ site }) => {
   const urls = Object.keys(paginas)
     .map((arquivo) => arquivo.replace('./', '').replace('.astro', ''))
     .filter((nome) => nome !== '404')
-    .map((nome) => (nome === 'index' ? '/' : `/${nome}.html`))
+    .map((nome) => (nome === 'index' ? '/' : `/${nome}`))
     .sort((a, b) => (a === '/' ? -1 : b === '/' ? 1 : a.localeCompare(b)))
     .map((caminho) => `  <url><loc>${new URL(caminho, site)}</loc><lastmod>${hoje}</lastmod></url>`)
     .join('\n');
