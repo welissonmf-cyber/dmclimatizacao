@@ -1,13 +1,18 @@
 ---
 import Texto from './Texto.astro';
 import type { Pergunta } from '../data/faq';
+import { jsonLdFaq } from '../data/dadosEstruturados';
 
 interface Props {
   perguntas: Pergunta[];
 }
 
 const { perguntas } = Astro.props;
+// Só um FAQ por página: ele mesmo publica o JSON-LD FAQPage.
+const jsonLd = jsonLdFaq(perguntas);
 ---
+
+{jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
 
 <div class="faq">
   {

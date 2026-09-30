@@ -8,6 +8,7 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import BotaoWhatsApp from '../components/BotaoWhatsApp.astro';
+import { empresa } from '../data/empresa';
 
 interface Props {
   /** Título único da página, com serviço + cidade. */
@@ -15,10 +16,20 @@ interface Props {
   descricao: string;
   /** Mensagem pré-preenchida dos botões de WhatsApp desta página. */
   mensagemWhatsApp?: string;
+  /** Blocos JSON-LD adicionais (ex.: HVACBusiness na Home). */
+  jsonLd?: object[];
+  /** Imagem de compartilhamento (1200×630), caminho a partir de /public. */
+  imagemOg?: string;
+  semIndexar?: boolean;
 }
 
-const { titulo, descricao, mensagemWhatsApp } = Astro.props;
-const canonical = new URL(Astro.url.pathname, Astro.site);
+const { titulo, descricao, mensagemWhatsApp, jsonLd = [], imagemOg = '/og-imagem.png', semIndexar = false } = Astro.props;
+
+// /index.html → /   ·   /servicos (dev) → /servicos.html
+let caminho = Astro.url.pathname.replace(/\/index(\.html)?$/, '/');
+if (caminho !== '/' && !caminho.endsWith('.html')) caminho = `${caminho.replace(/\/$/, '')}.html`;
+const canonical = new URL(caminho, Astro.site).href;
+const og = new URL(imagemOg, Astro.site).href;
 ---
 
 <!doctype html>
@@ -29,8 +40,27 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <script is:inline>document.documentElement.classList.add('js');</script>
     <title>{titulo}</title>
     <meta name="description" content={descricao} />
-    <link rel="canonical" href={canonical} />
+    {semIndexar ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content={empresa.nome} />
+    <meta property="og:title" content={titulo} />
+    <meta property="og:description" content={descricao} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={og} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${empresa.nome} — instalação e manutenção de ar condicionado em BH`} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon-32.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#14305c" />
+
+    {jsonLd.map((bloco) => <script type="application/ld+json" set:html={JSON.stringify(bloco)} />)}
     <slot name="head" />
   </head>
   <body>

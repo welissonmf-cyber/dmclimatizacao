@@ -8,6 +8,7 @@ import LogosClientes from '../components/LogosClientes.astro';
 import { empresa, linkTel, linkWhatsApp } from '../data/empresa';
 import { servicos } from '../data/servicos';
 import { faqGeral } from '../data/faq';
+import { jsonLdEmpresa } from '../data/dadosEstruturados';
 
 const mensagem = 'Olá! Vim pela página inicial do site e gostaria de pedir um orçamento.';
 const mensagemPmoc = 'Olá! Vim pelo site e gostaria de agendar uma visita técnica para PMOC da minha empresa.';
@@ -31,8 +32,9 @@ const etapas = [
 
 <Base
   titulo="Instalação e Manutenção de Ar Condicionado em BH | DM Climatização"
-  descricao="Instalação, manutenção preventiva e corretiva, higienização e PMOC de ar condicionado em Belo Horizonte e região. Atendimento residencial, comercial e industrial."
+  descricao="Instalação, manutenção, higienização e PMOC de ar condicionado em Belo Horizonte e região. Atendimento residencial, comercial e industrial."
   mensagemWhatsApp={mensagem}
+  jsonLd={[jsonLdEmpresa(Astro.site!)]}
 >
   <!-- 1. Hero -->
   <section class="hero">
