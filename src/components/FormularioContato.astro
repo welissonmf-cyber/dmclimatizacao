@@ -48,7 +48,7 @@ const whatsFalha = linkWhatsApp('Olá! Tentei enviar o formulário do site, mas 
     </>
   )}
   {!ehWeb3forms && <input type="hidden" name="_subject" value={`Novo contato pelo site — ${empresa.nome}`} />}
-  <input type="hidden" name="pagina" value={origem} />
+  <input type="hidden" name="Página de origem" value={origem} />
 
   <!-- Armadilha para robôs: humanos não veem este campo -->
   <div class="form__armadilha" aria-hidden="true">
@@ -58,14 +58,14 @@ const whatsFalha = linkWhatsApp('Olá! Tentei enviar o formulário do site, mas 
 
   <div class="campo">
     <label for="nome">Nome</label>
-    <input id="nome" name="nome" type="text" autocomplete="name" required minlength="2" aria-describedby="nome-erro" />
+    <input id="nome" name="Nome" type="text" autocomplete="name" required minlength="2" aria-describedby="nome-erro" />
     <p class="campo__erro" id="nome-erro" hidden></p>
   </div>
   <div class="campo">
     <label for="telefone">Telefone ou WhatsApp</label>
     <input
       id="telefone"
-      name="telefone"
+      name="Telefone / WhatsApp"
       type="tel"
       autocomplete="tel"
       inputmode="tel"
@@ -77,11 +77,11 @@ const whatsFalha = linkWhatsApp('Olá! Tentei enviar o formulário do site, mas 
   </div>
   <div class="campo">
     <label for="cidade">Cidade / bairro <span class="campo__opcional">(opcional)</span></label>
-    <input id="cidade" name="cidade" type="text" autocomplete="address-level2" />
+    <input id="cidade" name="Cidade / bairro" type="text" autocomplete="address-level2" />
   </div>
   <div class="campo">
     <label for="servico">Tipo de serviço</label>
-    <select id="servico" name="servico" required aria-describedby="servico-erro">
+    <select id="servico" name="Tipo de serviço" required aria-describedby="servico-erro">
       <option value="">Selecione</option>
       {tiposServico.map((t) => <option>{t}</option>)}
     </select>
@@ -89,7 +89,7 @@ const whatsFalha = linkWhatsApp('Olá! Tentei enviar o formulário do site, mas 
   </div>
   <div class="campo">
     <label for="mensagem">Mensagem <span class="campo__opcional">(opcional)</span></label>
-    <textarea id="mensagem" name="mensagem" rows="4" placeholder="Conte o que precisa: modelo do aparelho, quantidade, problema..."></textarea>
+    <textarea id="mensagem" name="Mensagem" rows="4" placeholder="Conte o que precisa: modelo do aparelho, quantidade, problema..."></textarea>
   </div>
 
   <p class="form__lgpd">
@@ -133,7 +133,7 @@ const whatsFalha = linkWhatsApp('Olá! Tentei enviar o formulário do site, mas 
   };
 
   function validarCampo(el: HTMLInputElement | HTMLSelectElement): boolean {
-    const regra = mensagens[el.name];
+    const regra = mensagens[el.id];
     if (!regra) return true;
     const erro = regra(el);
     const saida = document.getElementById(`${el.id}-erro`);
