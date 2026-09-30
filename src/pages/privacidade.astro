@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import CabecalhoPagina from '../components/CabecalhoPagina.astro';
 import Preencher from '../components/Preencher.astro';
 import { empresa } from '../data/empresa';
+import { nomeProvedor } from '../data/formulario';
 ---
 
 <Base
@@ -37,7 +38,7 @@ import { empresa } from '../data/empresa';
       <h2>Com quem compartilhamos</h2>
       <p>
         O formulário do site é enviado por um serviço de terceiros que apenas encaminha a mensagem
-        para o nosso e-mail <Preencher>nome do serviço de formulário escolhido na Fase 3</Preencher>.
+        para o nosso e-mail ({nomeProvedor}).
         Conversas por WhatsApp seguem também a política de privacidade do próprio WhatsApp.
       </p>
 

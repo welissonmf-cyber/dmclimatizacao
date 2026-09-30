@@ -1,0 +1,312 @@
+---
+/**
+ * Formulário de contato (Web3Forms ou Formspree, ver src/data/formulario.ts).
+ * - Sem JavaScript: envio HTML comum direto para o provedor.
+ * - Com JavaScript: validação em português, envio via fetch e mensagens na própria página.
+ * - Se o provedor não estiver configurado, oferece o WhatsApp no lugar.
+ */
+import Icone from './Icone.astro';
+import Preencher from './Preencher.astro';
+import { empresa, linkWhatsApp } from '../data/empresa';
+import { configFormulario, endpointFormulario } from '../data/formulario';
+
+interface Props {
+  origem: string;
+}
+
+const { origem } = Astro.props;
+const endpoint = endpointFormulario();
+const ehWeb3forms = configFormulario.provedor === 'web3forms';
+
+const tiposServico = [
+  'Instalação',
+  'Manutenção preventiva',
+  'Conserto / manutenção corretiva',
+  'Limpeza e higienização',
+  'PMOC para empresa',
+  'Projeto / VRF',
+  'Outro',
+];
+
+const whatsFalha = linkWhatsApp('Olá! Tentei enviar o formulário do site, mas não consegui. Gostaria de um orçamento.');
+---
+
+<form
+  class="form"
+  method="post"
+  action={endpoint ?? undefined}
+  novalidate
+  data-formulario-contato
+  data-endpoint={endpoint ?? ''}
+  data-provedor={configFormulario.provedor}
+>
+  {ehWeb3forms && configFormulario.web3formsChave && (
+    <>
+      <input type="hidden" name="access_key" value={configFormulario.web3formsChave} />
+      <input type="hidden" name="subject" value={`Novo contato pelo site — ${empresa.nome}`} />
+      <input type="hidden" name="from_name" value={`Site ${empresa.nome}`} />
+    </>
+  )}
+  {!ehWeb3forms && <input type="hidden" name="_subject" value={`Novo contato pelo site — ${empresa.nome}`} />}
+  <input type="hidden" name="pagina" value={origem} />
+
+  <!-- Armadilha para robôs: humanos não veem este campo -->
+  <div class="form__armadilha" aria-hidden="true">
+    <label for="botcheck">Não preencha</label>
+    <input id="botcheck" type="checkbox" name={ehWeb3forms ? 'botcheck' : '_gotcha'} tabindex="-1" autocomplete="off" />
+  </div>
+
+  <div class="campo">
+    <label for="nome">Nome</label>
+    <input id="nome" name="nome" type="text" autocomplete="name" required minlength="2" aria-describedby="nome-erro" />
+    <p class="campo__erro" id="nome-erro" hidden></p>
+  </div>
+  <div class="campo">
+    <label for="telefone">Telefone ou WhatsApp</label>
+    <input
+      id="telefone"
+      name="telefone"
+      type="tel"
+      autocomplete="tel"
+      inputmode="tel"
+      placeholder="(31) 9XXXX-XXXX"
+      required
+      aria-describedby="telefone-erro"
+    />
+    <p class="campo__erro" id="telefone-erro" hidden></p>
+  </div>
+  <div class="campo">
+    <label for="cidade">Cidade / bairro <span class="campo__opcional">(opcional)</span></label>
+    <input id="cidade" name="cidade" type="text" autocomplete="address-level2" />
+  </div>
+  <div class="campo">
+    <label for="servico">Tipo de serviço</label>
+    <select id="servico" name="servico" required aria-describedby="servico-erro">
+      <option value="">Selecione</option>
+      {tiposServico.map((t) => <option>{t}</option>)}
+    </select>
+    <p class="campo__erro" id="servico-erro" hidden></p>
+  </div>
+  <div class="campo">
+    <label for="mensagem">Mensagem <span class="campo__opcional">(opcional)</span></label>
+    <textarea id="mensagem" name="mensagem" rows="4" placeholder="Conte o que precisa: modelo do aparelho, quantidade, problema..."></textarea>
+  </div>
+
+  <p class="form__lgpd">
+    Usamos seus dados apenas para responder a este contato. Veja a
+    <a href="/privacidade.html">política de privacidade</a>.
+  </p>
+
+  <button class="btn btn--acao" type="submit" data-botao-enviar>Enviar mensagem</button>
+
+  {!endpoint && (
+    <p><Preencher>chave da Web3Forms (ou ID da Formspree) em src/data/formulario.ts</Preencher></p>
+  )}
+
+  <div class="form__retorno form__retorno--erro" role="alert" data-retorno-erro hidden>
+    <p><strong>Não foi possível enviar agora.</strong> Verifique a conexão e tente de novo, ou fale direto pelo WhatsApp.</p>
+    <a class="btn btn--contorno btn--sm" href={whatsFalha} target="_blank" rel="noopener">
+      <Icone nome="whatsapp" />
+      Chamar no WhatsApp
+    </a>
+  </div>
+</form>
+
+<div class="form__retorno form__retorno--sucesso" role="status" tabindex="-1" data-retorno-sucesso hidden>
+  <h3>Mensagem enviada!</h3>
+  <p>Obrigado pelo contato. Vamos responder pelo telefone ou WhatsApp informado o quanto antes.</p>
+  <p>Se for urgente, chame no WhatsApp: <a href={linkWhatsApp()} target="_blank" rel="noopener">{empresa.whatsapp.exibicao}</a>.</p>
+</div>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-formulario-contato]');
+
+  const mensagens: Record<string, (el: HTMLInputElement | HTMLSelectElement) => string | null> = {
+    nome: (el) => (el.value.trim().length < 2 ? 'Informe seu nome.' : null),
+    telefone: (el) => {
+      const digitos = el.value.replace(/\D/g, '');
+      if (!digitos) return 'Informe um telefone ou WhatsApp para retorno.';
+      if (digitos.length < 10 || digitos.length > 13) return 'Confira o número: inclua o DDD, ex. (31) 99999-9999.';
+      return null;
+    },
+    servico: (el) => (!el.value ? 'Escolha o tipo de serviço.' : null),
+  };
+
+  function validarCampo(el: HTMLInputElement | HTMLSelectElement): boolean {
+    const regra = mensagens[el.name];
+    if (!regra) return true;
+    const erro = regra(el);
+    const saida = document.getElementById(`${el.id}-erro`);
+    el.setAttribute('aria-invalid', erro ? 'true' : 'false');
+    if (saida) {
+      saida.textContent = erro ?? '';
+      saida.hidden = !erro;
+    }
+    return !erro;
+  }
+
+  if (form) {
+    const campos = [...form.querySelectorAll<HTMLInputElement | HTMLSelectElement>('#nome, #telefone, #servico')];
+    const botao = form.querySelector<HTMLButtonElement>('[data-botao-enviar]')!;
+    const erroEnvio = form.querySelector<HTMLElement>('[data-retorno-erro]')!;
+    const sucesso = document.querySelector<HTMLElement>('[data-retorno-sucesso]')!;
+
+    // Revalida enquanto a pessoa corrige, só depois do primeiro erro
+    campos.forEach((el) =>
+      el.addEventListener(el.tagName === 'SELECT' ? 'change' : 'input', () => {
+        if (el.getAttribute('aria-invalid') === 'true') validarCampo(el);
+      }),
+    );
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      erroEnvio.hidden = true;
+
+      const invalidos = campos.filter((el) => !validarCampo(el));
+      if (invalidos.length) {
+        invalidos[0].focus();
+        return;
+      }
+
+      const endpoint = form.dataset.endpoint;
+      if (!endpoint) {
+        erroEnvio.hidden = false;
+        return;
+      }
+
+      const dados = new FormData(form);
+
+      botao.disabled = true;
+      botao.textContent = 'Enviando...';
+
+      try {
+        const resposta = await fetch(endpoint, {
+          method: 'POST',
+          body: dados,
+          headers: { Accept: 'application/json' },
+        });
+        const json = await resposta.json().catch(() => ({}));
+        const ok = resposta.ok && (form.dataset.provedor !== 'web3forms' || json.success !== false);
+        if (!ok) throw new Error(json.message || `HTTP ${resposta.status}`);
+
+        form.hidden = true;
+        sucesso.hidden = false;
+        sucesso.focus();
+      } catch {
+        erroEnvio.hidden = false;
+      } finally {
+        botao.disabled = false;
+        botao.textContent = 'Enviar mensagem';
+      }
+    });
+  }
+</script>
+
+<style>
+  .form {
+    display: grid;
+    gap: var(--esp-4);
+  }
+
+  .campo {
+    display: grid;
+    gap: var(--esp-1);
+  }
+
+  .campo label {
+    color: var(--azul-tecnico);
+    font-weight: 500;
+  }
+
+  .campo__opcional {
+    color: var(--texto-suave);
+    font-weight: 400;
+    font-size: var(--fs-sm);
+  }
+
+  .campo input,
+  .campo select,
+  .campo textarea {
+    width: 100%;
+    min-height: 3rem;
+    padding: var(--esp-3);
+    border: 1px solid #6f8797;
+    border-radius: var(--raio);
+    background: var(--branco);
+    color: var(--texto);
+    font: inherit;
+  }
+
+  .campo textarea {
+    resize: vertical;
+  }
+
+  .campo input:focus-visible,
+  .campo select:focus-visible,
+  .campo textarea:focus-visible {
+    outline: 3px solid var(--azul-logo);
+    outline-offset: 0;
+    border-color: var(--azul-ar);
+  }
+
+  .campo [aria-invalid='true'] {
+    border: 2px solid #b3261e;
+  }
+
+  .campo__erro {
+    margin: 0;
+    color: #b3261e;
+    font-size: var(--fs-sm);
+    font-weight: 500;
+  }
+
+  .form__armadilha {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .form__lgpd {
+    margin: 0;
+    color: var(--texto-suave);
+    font-size: var(--fs-sm);
+  }
+
+  .form .btn {
+    justify-self: start;
+  }
+
+  .form .btn:disabled {
+    opacity: 0.7;
+    cursor: progress;
+  }
+
+  .form__retorno {
+    padding: var(--esp-4) var(--esp-5);
+    border-radius: var(--raio);
+  }
+
+  .form__retorno p {
+    margin-bottom: var(--esp-3);
+  }
+
+  .form__retorno--erro {
+    border-left: 4px solid #b3261e;
+    background: #fdecea;
+  }
+
+  .form__retorno--sucesso {
+    border-left: 4px solid #1e7a46;
+    background: #e8f5ee;
+  }
+
+  .form__retorno--sucesso h3 {
+    color: #1e7a46;
+  }
+
+  .form__retorno--sucesso:focus {
+    outline: none;
+  }
+</style>

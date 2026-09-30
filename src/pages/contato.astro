@@ -1,21 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
 import CabecalhoPagina from '../components/CabecalhoPagina.astro';
+import FormularioContato from '../components/FormularioContato.astro';
 import Icone from '../components/Icone.astro';
 import Preencher from '../components/Preencher.astro';
 import { empresa, linkTel, linkWhatsApp } from '../data/empresa';
 
 const mensagem = 'Olá! Vim pela página de contato do site e gostaria de um orçamento.';
-
-const tiposServico = [
-  'Instalação',
-  'Manutenção preventiva',
-  'Conserto / manutenção corretiva',
-  'Limpeza e higienização',
-  'PMOC para empresa',
-  'Projeto / VRF',
-  'Outro',
-];
 ---
 
 <Base
@@ -76,38 +67,7 @@ const tiposServico = [
       <div class="cartao formulario">
         <h2>Ou envie uma mensagem</h2>
         <p class="formulario__apoio">Respondemos pelo telefone ou WhatsApp informado.</p>
-        <!-- Envio (Formspree / Web3Forms / PHP), validação e mensagens de sucesso/erro: Fase 3 -->
-        <form class="form" method="post" data-formulario-contato>
-          <div class="campo">
-            <label for="nome">Nome</label>
-            <input id="nome" name="nome" type="text" autocomplete="name" required />
-          </div>
-          <div class="campo">
-            <label for="telefone">Telefone ou WhatsApp</label>
-            <input id="telefone" name="telefone" type="tel" autocomplete="tel" inputmode="tel" placeholder="(31) 9XXXX-XXXX" required />
-          </div>
-          <div class="campo">
-            <label for="cidade">Cidade / bairro</label>
-            <input id="cidade" name="cidade" type="text" autocomplete="address-level2" />
-          </div>
-          <div class="campo">
-            <label for="servico">Tipo de serviço</label>
-            <select id="servico" name="servico" required>
-              <option value="">Selecione</option>
-              {tiposServico.map((t) => <option>{t}</option>)}
-            </select>
-          </div>
-          <div class="campo">
-            <label for="mensagem">Mensagem</label>
-            <textarea id="mensagem" name="mensagem" rows="4" placeholder="Conte o que precisa: modelo do aparelho, quantidade, problema..."></textarea>
-          </div>
-          <p class="form__lgpd">
-            Usamos seus dados apenas para responder a este contato. Veja a
-            <a href="/privacidade.html">política de privacidade</a>.
-          </p>
-          <button class="btn btn--acao" type="submit">Enviar mensagem</button>
-          <p><Preencher>ligar o envio do formulário (Fase 3)</Preencher></p>
-        </form>
+        <FormularioContato origem="Página de contato" />
       </div>
     </div>
   </section>
@@ -122,7 +82,7 @@ const tiposServico = [
 
   @media (min-width: 56rem) {
     .contato {
-      grid-template-columns: 1fr 1.2fr;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
     }
   }
 
@@ -173,55 +133,5 @@ const tiposServico = [
 
   .formulario__apoio {
     color: var(--texto-suave);
-  }
-
-  .form {
-    display: grid;
-    gap: var(--esp-4);
-  }
-
-  .campo {
-    display: grid;
-    gap: var(--esp-1);
-  }
-
-  .campo label {
-    color: var(--azul-tecnico);
-    font-weight: 500;
-  }
-
-  .campo input,
-  .campo select,
-  .campo textarea {
-    width: 100%;
-    min-height: 3rem;
-    padding: var(--esp-3);
-    border: 1px solid #6f8797;
-    border-radius: var(--raio);
-    background: var(--branco);
-    color: var(--texto);
-    font: inherit;
-  }
-
-  .campo textarea {
-    resize: vertical;
-  }
-
-  .campo input:focus-visible,
-  .campo select:focus-visible,
-  .campo textarea:focus-visible {
-    outline: 3px solid var(--azul-logo);
-    outline-offset: 0;
-    border-color: var(--azul-ar);
-  }
-
-  .form__lgpd {
-    margin: 0;
-    color: var(--texto-suave);
-    font-size: var(--fs-sm);
-  }
-
-  .form .btn {
-    justify-self: start;
   }
 </style>
