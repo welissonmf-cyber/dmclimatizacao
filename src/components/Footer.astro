@@ -1,0 +1,186 @@
+---
+import Icone from './Icone.astro';
+import Preencher from './Preencher.astro';
+import { empresa, linkTel, linkWhatsApp, mensagemPadraoWhatsApp } from '../data/empresa';
+import { menuServicos } from '../data/navegacao';
+
+const ano = new Date().getFullYear();
+
+const linksEmpresa = [
+  { rotulo: 'Clientes e obras', href: '/clientes.html' },
+  { rotulo: 'A empresa', href: '/sobre.html' },
+  { rotulo: 'Contato', href: '/contato.html' },
+  { rotulo: 'Política de privacidade', href: '/privacidade.html' },
+];
+---
+
+<footer class="rodape">
+  <div class="container rodape__grade">
+    <div class="rodape__marca">
+      <p class="rodape__nome">{empresa.nome}</p>
+      <p>Instalação, manutenção e PMOC de ar condicionado para residências, comércio e indústria.</p>
+      <p class="rodape__cnpj">CNPJ {empresa.cnpj}</p>
+    </div>
+
+    <nav class="rodape__coluna" aria-labelledby="rodape-servicos">
+      <h2 id="rodape-servicos" class="rodape__titulo">Serviços</h2>
+      <ul role="list">
+        {menuServicos.map((item) => <li><a href={item.href}>{item.rotulo}</a></li>)}
+      </ul>
+    </nav>
+
+    <nav class="rodape__coluna" aria-labelledby="rodape-empresa">
+      <h2 id="rodape-empresa" class="rodape__titulo">Empresa</h2>
+      <ul role="list">
+        {linksEmpresa.map((item) => <li><a href={item.href}>{item.rotulo}</a></li>)}
+      </ul>
+    </nav>
+
+    <div class="rodape__coluna">
+      <h2 class="rodape__titulo">Fale com a gente</h2>
+      <ul class="rodape__contatos" role="list">
+        <li>
+          <a href={linkWhatsApp(mensagemPadraoWhatsApp)} target="_blank" rel="noopener">
+            <Icone nome="whatsapp" />
+            <span>WhatsApp {empresa.whatsapp.exibicao}</span>
+          </a>
+        </li>
+        {
+          empresa.telefones
+            .filter((t) => t.numero !== empresa.whatsapp.numero)
+            .map((t) => (
+              <li>
+                <a href={linkTel(t.numero)}>
+                  <Icone nome="telefone" />
+                  <span>{t.exibicao}</span>
+                </a>
+              </li>
+            ))
+        }
+        <li>
+          <a href={`mailto:${empresa.email}`}>
+            <Icone nome="email" />
+            <span>{empresa.email}</span>
+          </a>
+        </li>
+        <li>
+          <Icone nome="local" />
+          <span>
+            {empresa.cidadesAtendidas ? empresa.cidadesAtendidas.join(', ') : empresa.areaResumo}
+          </span>
+        </li>
+        <li>
+          <Icone nome="relogio" />
+          <span>{empresa.horario ?? <Preencher>horário de atendimento</Preencher>}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="rodape__base">
+    <div class="container rodape__base-conteudo">
+      <p>© {ano} {empresa.nome}. Todos os direitos reservados.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .rodape {
+    background: var(--azul-tecnico);
+    color: rgb(255 255 255 / 0.85);
+    font-size: var(--fs-sm);
+    /* espaço para o botão flutuante de WhatsApp no celular */
+    padding-bottom: 5rem;
+  }
+
+  @media (min-width: 64rem) {
+    .rodape {
+      padding-bottom: 0;
+    }
+  }
+
+  .rodape a {
+    color: var(--branco);
+    text-decoration: none;
+  }
+
+  .rodape a:hover {
+    text-decoration: underline;
+  }
+
+  .rodape__grade {
+    display: grid;
+    gap: var(--esp-6);
+    padding-block: var(--esp-7);
+  }
+
+  @media (min-width: 40rem) {
+    .rodape__grade {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .rodape__grade {
+      grid-template-columns: 1.3fr 1fr 1fr 1.4fr;
+    }
+  }
+
+  .rodape__nome {
+    margin-bottom: var(--esp-2);
+    color: var(--branco);
+    font-family: var(--fonte-titulo);
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .rodape__cnpj {
+    color: rgb(255 255 255 / 0.7);
+  }
+
+  .rodape__titulo {
+    margin-bottom: var(--esp-3);
+    color: var(--branco);
+    font-size: var(--fs-lg);
+    font-weight: 600;
+  }
+
+  .rodape ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .rodape li + li {
+    margin-top: var(--esp-2);
+  }
+
+  .rodape__contatos li,
+  .rodape__contatos a {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--esp-2);
+  }
+
+  .rodape__contatos :global(svg) {
+    width: 1.125rem;
+    height: 1.125rem;
+    margin-top: 0.2em;
+    flex-shrink: 0;
+    color: #7cc6ec;
+  }
+
+  .rodape__base {
+    border-top: 1px solid rgb(255 255 255 / 0.12);
+    background: var(--azul-tecnico-escuro);
+  }
+
+  .rodape__base-conteudo {
+    padding-block: var(--esp-4);
+  }
+
+  .rodape__base p {
+    margin: 0;
+  }
+</style>

@@ -1,0 +1,68 @@
+/*
+ * Tokens de design — DM Climatização
+ * Azuis derivados do logo (gota azul-clara + "DM" azul-marinho); cobre como cor de ação.
+ * Contraste verificado (WCAG AA):
+ *   branco sobre --cobre ............ 4,6:1
+ *   branco sobre --azul-tecnico ..... 13,1:1
+ *   --azul-ar sobre branco .......... 4,8:1
+ *   --texto sobre --gelo ............ 13,5:1
+ */
+:root {
+  /* Cores */
+  --azul-tecnico: #14305c;
+  --azul-tecnico-escuro: #0c1f3d;
+  --azul-ar: #0a78b5;
+  --azul-logo: #0a93d3; /* só decorativo: não usar para texto sobre branco */
+  --gelo: #eef4f7;
+  --gelo-borda: #d6e3ea;
+  --cobre: #b0602c;
+  --cobre-escuro: #8f4c21;
+  --texto: #1c2833;
+  --texto-suave: #4a5a68;
+  --branco: #ffffff;
+  --alerta: #fff4d6;
+  --alerta-borda: #e0b43a;
+
+  /* Tipografia */
+  --fonte-titulo: 'Barlow Semi Condensed', 'Arial Narrow', Arial, sans-serif;
+  --fonte-texto: 'Barlow', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+
+  --fs-sm: 0.9375rem;                            /* 15px */
+  --fs-base: 1.0625rem;                          /* 17px */
+  --fs-lg: 1.25rem;                              /* 20px */
+  --fs-h3: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --fs-h2: clamp(1.6rem, 1.3rem + 1.4vw, 2.25rem);
+  --fs-h1: clamp(2rem, 1.5rem + 2.5vw, 3.25rem);
+
+  --lh-texto: 1.6;
+  --lh-titulo: 1.15;
+
+  /* Espaçamento */
+  --esp-1: 0.25rem;
+  --esp-2: 0.5rem;
+  --esp-3: 0.75rem;
+  --esp-4: 1rem;
+  --esp-5: 1.5rem;
+  --esp-6: 2rem;
+  --esp-7: 3rem;
+  --esp-8: 4.5rem;
+  --secao: clamp(3rem, 2rem + 4vw, 5.5rem);
+
+  /* Layout */
+  --largura-max: 72rem;
+  --gutter: 1rem;
+
+  /* Forma */
+  --raio: 6px;
+  --raio-lg: 12px;
+  --sombra: 0 1px 2px rgb(12 31 61 / 0.06), 0 4px 16px rgb(12 31 61 / 0.08);
+  --sombra-forte: 0 6px 24px rgb(12 31 61 / 0.18);
+
+  --altura-header: 4.5rem;
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --gutter: 1.5rem;
+  }
+}

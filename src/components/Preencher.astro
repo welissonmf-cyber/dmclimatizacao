@@ -1,0 +1,22 @@
+---
+/**
+ * Marcador visível para informação que ainda depende do cliente.
+ * Nunca inventar dados: use <Preencher>o que falta</Preencher>.
+ * Na Fase 5, buscar por "PREENCHER" no dist/ para listar pendências.
+ */
+---
+
+<mark class="preencher">[PREENCHER: <slot />]</mark>
+
+<style>
+  .preencher {
+    padding: 0.05em 0.35em;
+    border: 1px dashed var(--alerta-borda);
+    border-radius: 3px;
+    background: var(--alerta);
+    color: var(--texto);
+    font-family: var(--fonte-texto);
+    font-size: 0.9em;
+    font-weight: 500;
+  }
+</style>

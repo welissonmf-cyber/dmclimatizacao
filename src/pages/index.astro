@@ -1,0 +1,78 @@
+---
+/**
+ * PROVISÓRIO (Fase 1): só o hero, para validar a base.
+ * A Home completa, na ordem da seção 4 do roteiro, entra na Fase 2.
+ */
+import Base from '../layouts/Base.astro';
+import Icone from '../components/Icone.astro';
+import { empresa, linkTel, linkWhatsApp } from '../data/empresa';
+
+const mensagem = 'Olá! Vim pela página inicial do site e gostaria de pedir um orçamento.';
+---
+
+<Base
+  titulo="Instalação e Manutenção de Ar Condicionado em BH | DM Climatização"
+  descricao="Instalação, manutenção preventiva e corretiva, higienização e PMOC de ar condicionado em Belo Horizonte e região. Atendimento residencial, comercial e industrial."
+  mensagemWhatsApp={mensagem}
+>
+  <section class="hero">
+    <div class="container hero__conteudo">
+      <h1>Instalação e manutenção de ar condicionado em BH e região</h1>
+      <p class="hero__sub">
+        Atendimento residencial, comercial e industrial: instalação, manutenção preventiva e
+        corretiva, higienização e contratos de PMOC para empresas.
+      </p>
+      <div class="hero__acoes">
+        <a class="btn btn--acao" href={linkWhatsApp(mensagem)} target="_blank" rel="noopener">
+          <Icone nome="whatsapp" />
+          Pedir orçamento no WhatsApp
+        </a>
+        <a class="btn btn--contorno" href={linkTel(empresa.telefones[0].numero)}>
+          <Icone nome="telefone" />
+          Ligar agora
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    padding-block: var(--secao);
+    background: linear-gradient(180deg, var(--gelo) 0%, var(--branco) 100%);
+  }
+
+  .hero__conteudo {
+    max-width: 48rem;
+    margin-inline: 0;
+  }
+
+  @media (min-width: 64rem) {
+    .hero__conteudo {
+      margin-inline: auto;
+      max-width: calc(var(--largura-max) + 2 * var(--gutter));
+    }
+    .hero h1,
+    .hero__sub {
+      max-width: 42rem;
+    }
+  }
+
+  .hero__sub {
+    font-size: var(--fs-lg);
+    color: var(--texto-suave);
+  }
+
+  .hero__acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--esp-3);
+    margin-top: var(--esp-5);
+  }
+
+  @media (max-width: 30rem) {
+    .hero__acoes .btn {
+      width: 100%;
+    }
+  }
+</style>

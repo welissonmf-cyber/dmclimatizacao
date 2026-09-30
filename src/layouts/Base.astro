@@ -1,0 +1,45 @@
+---
+import '@fontsource/barlow/400.css';
+import '@fontsource/barlow/500.css';
+import '@fontsource/barlow-semi-condensed/600.css';
+import '@fontsource/barlow-semi-condensed/700.css';
+import '../styles/global.css';
+
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import BotaoWhatsApp from '../components/BotaoWhatsApp.astro';
+
+interface Props {
+  /** Título único da página, com serviço + cidade. */
+  titulo: string;
+  descricao: string;
+  /** Mensagem pré-preenchida dos botões de WhatsApp desta página. */
+  mensagemWhatsApp?: string;
+}
+
+const { titulo, descricao, mensagemWhatsApp } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <title>{titulo}</title>
+    <meta name="description" content={descricao} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#14305c" />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="pular-conteudo" href="#conteudo">Pular para o conteúdo</a>
+    <Header mensagemWhatsApp={mensagemWhatsApp} />
+    <main id="conteudo">
+      <slot />
+    </main>
+    <Footer />
+    <BotaoWhatsApp mensagem={mensagemWhatsApp} />
+  </body>
+</html>

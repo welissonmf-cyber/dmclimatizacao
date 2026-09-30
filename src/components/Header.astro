@@ -1,0 +1,340 @@
+---
+import { Image } from 'astro:assets';
+import Icone from './Icone.astro';
+import logo from '../assets/legado/logo2.png';
+import { empresa, linkTel, linkWhatsApp, mensagemPadraoWhatsApp } from '../data/empresa';
+import { menuPrincipal, ehPaginaAtual } from '../data/navegacao';
+
+interface Props {
+  mensagemWhatsApp?: string;
+}
+
+const { mensagemWhatsApp = mensagemPadraoWhatsApp } = Astro.props;
+const caminho = Astro.url.pathname;
+const telefonePrincipal = empresa.telefones[0];
+---
+
+<div class="faixa-topo">
+  <div class="container faixa-topo__conteudo">
+    <p class="faixa-topo__area">
+      <Icone nome="local" />
+      <span>Atendemos {empresa.areaResumo}</span>
+    </p>
+    <ul class="faixa-topo__contatos" role="list">
+      <li>
+        <a href={linkTel(telefonePrincipal.numero)}>
+          <Icone nome="telefone" />
+          <span>{telefonePrincipal.exibicao}</span>
+        </a>
+      </li>
+      <li class="so-desktop">
+        <a href={`mailto:${empresa.email}`}>
+          <Icone nome="email" />
+          <span>{empresa.email}</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<header class="cabecalho">
+  <div class="container cabecalho__conteudo">
+    <a class="cabecalho__logo" href="/" aria-label={`${empresa.nome} — página inicial`}>
+      <Image src={logo} alt="" height={64} densities={[1, 2]} loading="eager" fetchpriority="high" />
+    </a>
+
+    <button
+      class="cabecalho__menu-botao"
+      type="button"
+      aria-expanded="false"
+      aria-controls="menu-principal"
+      data-menu-botao
+    >
+      <Icone nome="menu" class="icone-abrir" />
+      <Icone nome="fechar" class="icone-fechar" />
+      <span>Menu</span>
+    </button>
+
+    <nav id="menu-principal" class="menu" aria-label="Principal" data-aberto="false">
+      <ul class="menu__lista" role="list">
+        {
+          menuPrincipal.map((item) => (
+            <li>
+              <a
+                class="menu__link"
+                href={item.href}
+                aria-current={ehPaginaAtual(caminho, item.href) ? 'page' : undefined}
+              >
+                {item.rotulo}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <a class="btn btn--acao btn--sm menu__cta" href={linkWhatsApp(mensagemWhatsApp)} target="_blank" rel="noopener">
+        <Icone nome="whatsapp" />
+        Pedir orçamento
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const botao = document.querySelector<HTMLButtonElement>('[data-menu-botao]');
+  const menu = document.getElementById('menu-principal');
+
+  if (botao && menu) {
+    const definir = (aberto: boolean) => {
+      botao.setAttribute('aria-expanded', String(aberto));
+      menu.dataset.aberto = String(aberto);
+    };
+
+    botao.addEventListener('click', () => {
+      definir(botao.getAttribute('aria-expanded') !== 'true');
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && botao.getAttribute('aria-expanded') === 'true') {
+        definir(false);
+        botao.focus();
+      }
+    });
+
+    // Fecha ao clicar em link de âncora na mesma página
+    menu.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).closest('a')) definir(false);
+    });
+
+    window.matchMedia('(min-width: 64rem)').addEventListener('change', (e) => {
+      if (e.matches) definir(false);
+    });
+  }
+</script>
+
+<style>
+  /* Faixa superior */
+  .faixa-topo {
+    background: var(--azul-tecnico);
+    color: var(--branco);
+    font-size: var(--fs-sm);
+  }
+
+  .faixa-topo__conteudo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--esp-4);
+    min-height: 2.5rem;
+  }
+
+  .faixa-topo__area,
+  .faixa-topo__contatos a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--esp-2);
+    margin: 0;
+  }
+
+  .faixa-topo__contatos {
+    display: flex;
+    gap: var(--esp-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .faixa-topo a {
+    color: var(--branco);
+    text-decoration: none;
+    min-height: 2.5rem;
+  }
+
+  .faixa-topo a:hover {
+    text-decoration: underline;
+  }
+
+  .faixa-topo :global(svg) {
+    width: 1rem;
+    height: 1rem;
+    opacity: 0.85;
+  }
+
+  .so-desktop {
+    display: none;
+  }
+
+  @media (max-width: 30rem) {
+    .faixa-topo__area {
+      display: none;
+    }
+    .faixa-topo__conteudo {
+      justify-content: center;
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .so-desktop {
+      display: list-item;
+    }
+  }
+
+  /* Cabeçalho principal */
+  .cabecalho {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--branco);
+    border-bottom: 1px solid var(--gelo-borda);
+  }
+
+  .cabecalho__conteudo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--esp-5);
+    min-height: var(--altura-header);
+  }
+
+  .cabecalho__logo {
+    flex-shrink: 0;
+    padding-block: var(--esp-1);
+  }
+
+  .cabecalho__logo img {
+    width: auto;
+    height: 3.5rem;
+  }
+
+  .cabecalho__menu-botao {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--esp-2);
+    min-height: 2.75rem;
+    padding: var(--esp-2) var(--esp-3);
+    border: 1px solid var(--gelo-borda);
+    border-radius: var(--raio);
+    background: var(--branco);
+    color: var(--azul-tecnico);
+    font: 600 var(--fs-base) / 1 var(--fonte-titulo);
+    cursor: pointer;
+  }
+
+  /* :global porque a classe vai para o <svg> do componente Icone */
+  .cabecalho__menu-botao :global(.icone-fechar),
+  .cabecalho__menu-botao[aria-expanded='true'] :global(.icone-abrir) {
+    display: none;
+  }
+
+  .cabecalho__menu-botao[aria-expanded='true'] :global(.icone-fechar) {
+    display: block;
+  }
+
+  .menu__lista {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .menu__link {
+    display: block;
+    color: var(--azul-tecnico);
+    font-family: var(--fonte-titulo);
+    font-size: var(--fs-lg);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .menu__link:hover {
+    color: var(--azul-ar);
+  }
+
+  .menu__link[aria-current='page'] {
+    color: var(--azul-ar);
+  }
+
+  /* Menu no celular: painel abaixo do cabeçalho.
+     Sem JavaScript (.js ausente), o menu fica sempre aberto e o botão some. */
+  @media (max-width: 63.99rem) {
+    :global(html:not(.js)) .cabecalho__menu-botao {
+      display: none;
+    }
+
+    :global(html:not(.js)) .cabecalho__conteudo {
+      flex-wrap: wrap;
+    }
+
+    .menu {
+      width: 100%;
+    }
+
+    :global(html.js) .menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      width: auto;
+      padding: var(--esp-2) var(--gutter) var(--esp-5);
+      background: var(--branco);
+      border-bottom: 1px solid var(--gelo-borda);
+      box-shadow: var(--sombra);
+    }
+
+    :global(html.js) .menu[data-aberto='false'] {
+      display: none;
+    }
+
+    .menu__link {
+      padding: var(--esp-3) 0;
+      border-bottom: 1px solid var(--gelo);
+    }
+
+    .menu__link[aria-current='page'] {
+      box-shadow: inset 3px 0 0 var(--cobre);
+      padding-left: var(--esp-3);
+    }
+
+    .menu__cta {
+      width: 100%;
+      margin-top: var(--esp-4);
+    }
+  }
+
+  /* Desktop */
+  @media (min-width: 64rem) {
+    .cabecalho__menu-botao {
+      display: none;
+    }
+
+    .cabecalho__logo img {
+      height: 4rem;
+    }
+
+    .menu {
+      display: flex;
+      align-items: center;
+      gap: var(--esp-5);
+    }
+
+    .menu__lista {
+      display: flex;
+      gap: var(--esp-1);
+    }
+
+    .menu__link {
+      position: relative;
+      padding: var(--esp-2) var(--esp-3);
+      font-size: 1.125rem;
+    }
+
+    .menu__link[aria-current='page']::after {
+      content: '';
+      position: absolute;
+      left: var(--esp-3);
+      right: var(--esp-3);
+      bottom: 0;
+      height: 3px;
+      border-radius: 2px;
+      background: var(--cobre);
+    }
+  }
+</style>

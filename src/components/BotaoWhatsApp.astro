@@ -1,0 +1,69 @@
+---
+/**
+ * Botão flutuante de WhatsApp. Visível só no celular/tablet;
+ * no desktop o CTA do cabeçalho cumpre esse papel.
+ */
+import Icone from './Icone.astro';
+import { linkWhatsApp, mensagemPadraoWhatsApp } from '../data/empresa';
+
+interface Props {
+  /** Mensagem pré-preenchida — indique a página/serviço de origem. */
+  mensagem?: string;
+}
+
+const { mensagem = mensagemPadraoWhatsApp } = Astro.props;
+---
+
+<a
+  class="whatsapp-flutuante"
+  href={linkWhatsApp(mensagem)}
+  target="_blank"
+  rel="noopener"
+>
+  <Icone nome="whatsapp" />
+  <span>WhatsApp</span>
+</a>
+
+<style>
+  .whatsapp-flutuante {
+    position: fixed;
+    right: var(--esp-4);
+    bottom: calc(var(--esp-4) + env(safe-area-inset-bottom, 0px));
+    z-index: 40;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--esp-2);
+    min-height: 3.25rem;
+    padding: var(--esp-2) var(--esp-5) var(--esp-2) var(--esp-4);
+    border-radius: 999px;
+    background: var(--cobre);
+    color: var(--branco);
+    box-shadow: var(--sombra-forte);
+    font-family: var(--fonte-titulo);
+    font-size: var(--fs-lg);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .whatsapp-flutuante:hover {
+    background: var(--cobre-escuro);
+    color: var(--branco);
+  }
+
+  .whatsapp-flutuante :global(svg) {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+
+  @media (min-width: 64rem) {
+    .whatsapp-flutuante {
+      display: none;
+    }
+  }
+
+  @media print {
+    .whatsapp-flutuante {
+      display: none;
+    }
+  }
+</style>
